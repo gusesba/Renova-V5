@@ -255,7 +255,7 @@ input[type="search"] {
 }
 
 .search-group th {
-  @apply pl-7 pt-3 pb-6;
+  @apply pl-7 pb-6;
 }
 
 .search-group th:last-child {
@@ -267,7 +267,7 @@ input[type="search"] {
 }
 
 .title-group th {
-  @apply font-medium text-left pl-7 pt-10;
+  @apply font-medium text-left pl-7 pt-5 pb-3;
 }
 
 .line-group td {

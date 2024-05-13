@@ -5,7 +5,7 @@ interface ContentProps {
 export const Content: React.FC<ContentProps> = ({ children }: ContentProps) => {
   return (
     <>
-      <div className="datatable-bottom border-t-gray-1 dark:border-t-graydark border-t-[1px] flex items-center">
+      <div className="datatable-bottom border-t-gray-1 dark:border-t-graydark border-t-[1px] flex ">
         <table className="w-full">{children}</table>
       </div>
     </>
