@@ -1,23 +1,74 @@
+"use client";
+import { Cliente } from "@/resources/cliente/cliente.resource";
+import { useClienteService } from "@/resources/cliente/cliente.service";
+import { useEffect, useState } from "react";
 import { Bottom } from "./Bottom";
 import { Content } from "./Content";
+import { LinhaTabela } from "./LinhaTabela";
+import { Table } from "./Table";
+import { TableTitleItem } from "./TableTitleItem";
 import { Title } from "./Title";
 import { Top } from "./Top";
 
 export const DataTable = () => {
+  const [clientes, setClientes] = useState<Cliente[]>([]);
+
+  const clientesService = useClienteService;
+
+  useEffect(() => {
+    clientesService.getClientes().then((data) => {
+      setClientes(data);
+    });
+  }, []);
+
+  const linhasTabela = () => {
+    return clientes.map((cliente) => (
+      <LinhaTabela key={cliente.id}>
+        <td>{cliente.id}</td>
+        <td>{cliente.nome}</td>
+        <td>{cliente.celular}</td>
+        <td>{cliente.apelido}</td>
+        <td>{cliente.indicacao}</td>
+      </LinhaTabela>
+    ));
+  };
+
   return (
     <>
-      <Title />
-      <div className="flex flex-col gap-5 md:gap-7 2xl:gap-10">
-        <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
-          <div className="data-table-common data-table-one max-w-full overflow-x-auto">
-            <div className="datatable-wrapper datatable-loading no-footer sortable searchable fixed-columns">
-              <Top />
-              <Content />
-              <Bottom />
-            </div>
-          </div>
-        </div>
-      </div>
+      <Title titulo="Clientes" caminho="Tabelas /" />
+      <Table>
+        <Top />
+        <Content>
+          <thead>
+            <tr className="title-group">
+              <TableTitleItem>ID</TableTitleItem>
+              <TableTitleItem>Nome</TableTitleItem>
+              <TableTitleItem>Celular</TableTitleItem>
+              <TableTitleItem>Apelido</TableTitleItem>
+              <TableTitleItem>Indicação</TableTitleItem>
+            </tr>
+            <tr className="search-group">
+              <th>
+                <input type="search" />
+              </th>
+              <th>
+                <input type="search" />
+              </th>
+              <th>
+                <input type="search" />
+              </th>
+              <th>
+                <input type="search" />
+              </th>
+              <th>
+                <input type="search" />
+              </th>
+            </tr>
+          </thead>
+          <tbody>{linhasTabela()}</tbody>
+        </Content>
+        <Bottom />
+      </Table>
     </>
   );
 };
