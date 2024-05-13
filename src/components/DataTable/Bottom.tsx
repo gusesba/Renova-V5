@@ -1,7 +1,7 @@
 export const Bottom = () => {
   return (
     <>
-      <div className="datatable-bottom h-20 border-t-gray-1 border-t-[1px] flex justify-between items-center">
+      <div className="datatable-bottom h-20 border-t-gray-1 dark:border-t-graydark border-t-[1px] flex justify-between items-center">
         <nav className="m-7">
           <ul className="flex">
             <li className="page-item">{"‹"}</li>

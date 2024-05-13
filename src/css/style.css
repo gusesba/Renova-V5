@@ -232,6 +232,10 @@ input[type="search"]::-webkit-search-cancel-button {
   @apply appearance-none;
 }
 
+input[type="search"] {
+  @apply border-gray-1 border-[1px] rounded border-solid dark:bg-graydark dark:border-graydark dark:focus:border-blue-600 focus:border-blue-600 focus:outline-none;
+}
+
 .custom-input-date::-webkit-calendar-picker-indicator {
   background-position: center;
   background-repeat: no-repeat;
@@ -248,4 +252,24 @@ input[type="search"]::-webkit-search-cancel-button {
 
 .page-item.selected {
   @apply bg-primary text-white hover:cursor-default;
+}
+
+.search-group th {
+  @apply pl-7 pt-3 pb-6;
+}
+
+.search-group th:last-child {
+  @apply pr-7;
+}
+
+.search-group input {
+  @apply w-full pl-3 pr-3 pt-1 pb-1;
+}
+
+.title-group th {
+  @apply font-medium text-left pl-7 pt-10;
+}
+
+.line-group td {
+  @apply font-medium text-left pl-7 pt-6 pb-6;
 }

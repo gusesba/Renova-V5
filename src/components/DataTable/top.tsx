@@ -4,7 +4,7 @@ export const Top = () => {
       <div className="datatable-top h-20 flex items-center justify-between">
         <div className="datatable-search m-7">
           <input
-            className="datatable-input border-solid p-5 border-gray-1 pt-[10px] dark:bg-graydark dark:border-graydark dark:focus:border-blue-600 focus:border-blue-600 focus:outline-none pb-[10px] w-100 border-[1px] rounded"
+            className="datatable-input  p-5  pt-[10px]  pb-[10px] w-100 "
             placeholder="Search..."
             type="search"
             title="Search within table"
