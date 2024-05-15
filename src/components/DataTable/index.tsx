@@ -1,7 +1,7 @@
 "use client";
 import { Cliente } from "@/resources/cliente/cliente.resource";
 import { useClienteService } from "@/resources/cliente/cliente.service";
-import { useEffect, useState } from "react";
+import { memo, useEffect, useState } from "react";
 import { Bottom } from "./Bottom";
 import { Content } from "./Content";
 import { LinhaTabela } from "./LinhaTabela";
@@ -9,9 +9,11 @@ import { Table } from "./Table";
 import { TableTitleItem } from "./TableTitleItem";
 import { Title } from "../Utils/Title";
 import { Top } from "./Top";
+import { useRouter } from "next/navigation";
 
 export const DataTable = () => {
   const [clientes, setClientes] = useState<Cliente[]>([]);
+  const router = useRouter();
 
   const clientesService = useClienteService;
 
@@ -23,7 +25,10 @@ export const DataTable = () => {
 
   const linhasTabela = () => {
     return clientes.map((cliente) => (
-      <LinhaTabela key={cliente.id}>
+      <LinhaTabela
+        key={cliente.id}
+        onDoubleClick={() => router.push(`/clientes/${cliente.id}`)}
+      >
         <td>{cliente.id}</td>
         <td>{cliente.nome}</td>
         <td>{cliente.celular}</td>
@@ -35,7 +40,7 @@ export const DataTable = () => {
 
   return (
     <>
-      <Title titulo="Clientes" caminho="Tabelas /" />
+      <Title titulo="Clientes" caminho="Clientes / " />
       <Table>
         <Top />
         <Content>
