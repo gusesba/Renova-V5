@@ -7,7 +7,7 @@ import { Content } from "./Content";
 import { LinhaTabela } from "./LinhaTabela";
 import { Table } from "./Table";
 import { TableTitleItem } from "./TableTitleItem";
-import { Title } from "./Title";
+import { Title } from "../Utils/Title";
 import { Top } from "./Top";
 
 export const DataTable = () => {
