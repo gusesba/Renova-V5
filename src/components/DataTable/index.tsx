@@ -10,12 +10,15 @@ import { TableTitleItem } from "./TableTitleItem";
 import { Title } from "../Utils/Title";
 import { Top } from "./Top";
 import { useRouter } from "next/navigation";
+import useDataTable from "@/hooks/useDataTable";
 
 export const DataTable = () => {
   const [clientes, setClientes] = useState<Cliente[]>([]);
   const router = useRouter();
 
   const clientesService = useClienteService;
+
+  const [linhasSelecionadas] = useDataTable();
 
   useEffect(() => {
     clientesService.getClientes().then((data) => {
@@ -27,6 +30,8 @@ export const DataTable = () => {
     return clientes.map((cliente) => (
       <LinhaTabela
         key={cliente.id}
+        linhasSelecionadas={linhasSelecionadas}
+        identificador={cliente.id as number}
         onDoubleClick={() => router.push(`/clientes/${cliente.id}`)}
       >
         <td>{cliente.id}</td>
@@ -43,6 +48,9 @@ export const DataTable = () => {
       <Title titulo="Clientes" caminho="Clientes / " />
       <Table>
         <Top />
+        <h1 id="delete" className="hidden">
+          Delete
+        </h1>
         <Content>
           <thead>
             <tr className="title-group">
