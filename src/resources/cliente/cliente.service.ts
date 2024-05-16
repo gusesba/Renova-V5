@@ -9,6 +9,13 @@ class ClienteService {
     //return await response.json();
     return clientes;
   }
+
+  async deleteCliente(id: number): Promise<void> {
+    //const response = await fetch(this.baseURL);
+    //return await response.json();
+    console.log(id);
+    return;
+  }
 }
 
 export const useClienteService = new ClienteService();

@@ -273,3 +273,33 @@ input[type="search"] {
 .line-group td {
   @apply font-medium text-left pl-7 pt-6 pb-6;
 }
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+    scale: 90%;
+  }
+  100% {
+    opacity: 1;
+    scale: 100%;
+  }
+}
+
+@keyframes fade-out {
+  0% {
+    opacity: 1;
+    scale: 100%;
+  }
+  100% {
+    opacity: 0;
+    scale: 90%;
+  }
+}
+
+dialog[open] {
+  animation: fade-in 150ms forwards;
+}
+
+dialog[closing] {
+  animation: fade-out 150ms forwards;
+}

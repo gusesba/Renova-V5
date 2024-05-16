@@ -1,13 +1,11 @@
 import { useState } from "react";
 
 interface LinhaTabelaProps extends React.HTMLAttributes<HTMLTableRowElement> {
-  children?: React.ReactNode;
   linhasSelecionadas: number[];
   identificador: number;
 }
 
 export const LinhaTabela: React.FC<LinhaTabelaProps> = ({
-  children,
   linhasSelecionadas,
   identificador,
   ...props
@@ -26,8 +24,13 @@ export const LinhaTabela: React.FC<LinhaTabelaProps> = ({
           linhasSelecionadas.push(identificador);
         }
         if (linhasSelecionadas.length === 0)
-          document.getElementById("delete")?.classList.toggle("hidden");
-        else document.getElementById("delete")?.classList.remove("hidden");
+          document
+            .getElementById("data-table-delete")
+            ?.classList.toggle("hidden");
+        else
+          document
+            .getElementById("data-table-delete")
+            ?.classList.remove("hidden");
       }}
       className={
         isSelected
@@ -36,7 +39,7 @@ export const LinhaTabela: React.FC<LinhaTabelaProps> = ({
       }
       {...props}
     >
-      {children}
+      {props.children}
     </tr>
   );
 };

@@ -1,7 +1,7 @@
 "use client";
 import { Cliente } from "@/resources/cliente/cliente.resource";
 import { useClienteService } from "@/resources/cliente/cliente.service";
-import { memo, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Bottom } from "./Bottom";
 import { Content } from "./Content";
 import { LinhaTabela } from "./LinhaTabela";
@@ -11,6 +11,8 @@ import { Title } from "../Utils/Title";
 import { Top } from "./Top";
 import { useRouter } from "next/navigation";
 import useDataTable from "@/hooks/useDataTable";
+import { DeleteButton } from "./DeleteButton";
+import { abrirModal, DeleteModal } from "./DeleteModal";
 
 export const DataTable = () => {
   const [clientes, setClientes] = useState<Cliente[]>([]);
@@ -45,12 +47,12 @@ export const DataTable = () => {
 
   return (
     <>
+      <DeleteModal itens={linhasSelecionadas} />
       <Title titulo="Clientes" caminho="Clientes / " />
       <Table>
-        <Top />
-        <h1 id="delete" className="hidden">
-          Delete
-        </h1>
+        <Top>
+          <DeleteButton onClick={abrirModal} />
+        </Top>
         <Content>
           <thead>
             <tr className="title-group">

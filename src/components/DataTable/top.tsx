@@ -1,8 +1,11 @@
-export const Top = () => {
+interface TopProps {
+  children?: React.ReactNode;
+}
+export const Top: React.FC<TopProps> = ({ children }: TopProps) => {
   return (
     <>
       <div className="datatable-top h-20 flex items-center justify-between">
-        <div className="datatable-search m-7">
+        <div className="datatable-search m-7 flex items-center">
           <input
             className="datatable-input  p-5  pt-[10px]  pb-[10px] w-100 "
             placeholder="Search..."
@@ -10,6 +13,7 @@ export const Top = () => {
             title="Search within table"
             aria-controls="dataTableOne"
           />
+          {children}
         </div>
         <div className="datatable-dropdown m-8">
           <label className="font-medium">
