@@ -12,18 +12,19 @@ import { Top } from "./Top";
 import { useRouter } from "next/navigation";
 import useDataTable from "@/hooks/useDataTable";
 import { DeleteButton } from "./DeleteButton";
-import { abrirModal, DeleteModal } from "./DeleteModal";
+import { DeleteModal } from "./DeleteModal";
+import { abrirModal } from "../Modal/Modal";
 
 export const DataTable = () => {
   const [clientes, setClientes] = useState<Cliente[]>([]);
   const router = useRouter();
 
-  const clientesService = useClienteService;
+  const clienteService = useClienteService;
 
   const [linhasSelecionadas] = useDataTable();
 
   useEffect(() => {
-    clientesService.getClientes().then((data) => {
+    clienteService.getClientes().then((data) => {
       setClientes(data);
     });
   }, []);
@@ -47,7 +48,7 @@ export const DataTable = () => {
 
   return (
     <>
-      <DeleteModal itens={linhasSelecionadas} />
+      <DeleteModal itens={linhasSelecionadas} clienteService={clienteService} />
       <Title titulo="Clientes" caminho="Clientes / " />
       <Table>
         <Top>

@@ -1,7 +1,7 @@
 import { clientes } from "@/tempdata/clientes";
 import { Cliente } from "./cliente.resource";
 
-class ClienteService {
+export class ClienteService {
   baseURL: string = "http://localhost:8080/v1/images";
 
   async getClientes(): Promise<Cliente[]> {
@@ -14,6 +14,13 @@ class ClienteService {
     //const response = await fetch(this.baseURL);
     //return await response.json();
     console.log(id);
+    return;
+  }
+
+  async deleteClientes(ids: number[]): Promise<void> {
+    //const response = await fetch(this.baseURL);
+    //return await response.json();
+    console.log(ids);
     return;
   }
 }
