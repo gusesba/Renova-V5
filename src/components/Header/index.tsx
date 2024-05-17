@@ -89,7 +89,7 @@ const Header = (props: {
 
               <input
                 type="text"
-                placeholder="Type to search..."
+                placeholder="Escreva para pesquisar..."
                 className="w-full bg-transparent pl-9 pr-4 font-normal focus:outline-none xl:w-125"
               />
             </div>

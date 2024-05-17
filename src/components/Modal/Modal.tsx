@@ -2,6 +2,25 @@ import { MouseEventHandler } from "react";
 
 interface ModalProps extends React.HtmlHTMLAttributes<HTMLDialogElement> {}
 
+// close when click ouside
+const handleClick: MouseEventHandler<HTMLDialogElement> = (e) => {
+  if ((e.target as HTMLDivElement).id === "background-fade") {
+    fecharModal();
+  }
+};
+
+//close when esc key pressed
+const handleKeyDown = (e: KeyboardEvent) => {
+  if (e.key === "Escape") {
+    fecharModal();
+  }
+};
+
+export const abrirModal = () => {
+  (document.getElementById("modal") as HTMLDialogElement).show();
+  document.addEventListener("keydown", handleKeyDown);
+};
+
 export const fecharModal = () => {
   const modal = document.getElementById("modal") as HTMLDialogElement;
   document.removeEventListener("keydown", handleKeyDown);
@@ -14,23 +33,6 @@ export const fecharModal = () => {
     },
     { once: true }
   );
-};
-
-const handleClick: MouseEventHandler<HTMLDialogElement> = (e) => {
-  if ((e.target as HTMLDivElement).id === "background-fade") {
-    fecharModal();
-  }
-};
-
-const handleKeyDown = (e: KeyboardEvent) => {
-  if (e.key === "Escape") {
-    fecharModal();
-  }
-};
-
-export const abrirModal = () => {
-  (document.getElementById("modal") as HTMLDialogElement).show();
-  document.addEventListener("keydown", handleKeyDown);
 };
 
 export const Modal: React.FC<ModalProps> = ({ ...props }: ModalProps) => {
