@@ -1,23 +1,24 @@
+import { clienteFilter } from "@/resources/cliente/cliente.service";
+import { Dispatch, MutableRefObject, SetStateAction } from "react";
 import { abrirModal } from "../Modal/Modal";
 import { DeleteButton } from "./DeleteButton";
 
-interface TopProps extends React.HTMLAttributes<HTMLDivElement> {}
-export const Top: React.FC<TopProps> = ({ ...props }: TopProps) => {
-  const searchInput = () => {
-    return (
-      <input
-        className="datatable-input  p-5  pt-[10px]  pb-[10px] w-100 "
-        placeholder="Pesquisar..."
-        type="search"
-      />
-    );
-  };
+interface TopProps extends React.HTMLAttributes<HTMLDivElement> {
+  take: number;
+  setTake: Dispatch<SetStateAction<number>>;
+}
+export const Top: React.FC<TopProps> = ({
+  take,
+  setTake,
 
+  ...props
+}: TopProps) => {
   const entriesPerPage = () => {
     return (
       <select
-        defaultValue={10}
+        value={take}
         className="datatable-selector focus:outline-none mr-3 dark:bg-inherit"
+        onChange={(e) => setTake(parseInt(e.target.value))}
       >
         <option value={5}>5</option>
         <option value={10}>10</option>
@@ -30,9 +31,8 @@ export const Top: React.FC<TopProps> = ({ ...props }: TopProps) => {
     <>
       <div className="datatable-top h-20 flex items-center justify-between">
         <div className="datatable-search m-7 flex items-center">
-          {searchInput()}
-          <DeleteButton onClick={abrirModal} />
           {props.children}
+          <DeleteButton onClick={abrirModal} />
         </div>
         <div className="datatable-dropdown m-8">
           {entriesPerPage()}
