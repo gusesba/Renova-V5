@@ -15,13 +15,13 @@ export const Top: React.FC<TopProps> = ({ ...props }: TopProps) => {
 
   const entriesPerPage = () => {
     return (
-      <select className="datatable-selector focus:outline-none mr-3 dark:bg-inherit">
-        <option value="5">5</option>
-        <option value="10" selected>
-          10
-        </option>
-        <option value="15">15</option>
-        <option value="-1">All</option>
+      <select
+        defaultValue={10}
+        className="datatable-selector focus:outline-none mr-3 dark:bg-inherit"
+      >
+        <option value={5}>5</option>
+        <option value={10}>10</option>
+        <option value={15}>15</option>
       </select>
     );
   };
