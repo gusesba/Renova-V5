@@ -160,7 +160,6 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
     } else {
       document.querySelector("body")?.classList.remove("sidebar-expanded");
     }
-    console.log(pathname);
   }, [sidebarExpanded]);
 
   // close on click ouside

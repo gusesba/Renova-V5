@@ -26,7 +26,7 @@ const Clientes = () => {
     clienteService.getClientes().then((data) => {
       setClientes(data);
     });
-  }, []);
+  }, [clienteService]);
 
   const linhasTabela = () => {
     return clientes.map((cliente) => (
