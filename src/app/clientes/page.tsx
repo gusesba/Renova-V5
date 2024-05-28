@@ -28,11 +28,9 @@ const Clientes = () => {
     numberOfElements: 0,
   });
   const router = useRouter();
-  const [linhasSelecionadas] = useDataTable();
+  const [linhasSelecionadas, take, setTake, page, setPage, filter] =
+    useDataTable<clienteFilter>();
   const clienteService = useClienteService;
-  const [take, setTake] = useState<number>(10);
-  const [page, setPage] = useState<number>(0);
-  const filter = useRef<clienteFilter>({});
 
   const fetchClientes = useCallback(() => {
     clienteService.getClientes(filter.current, take, page).then((data) => {
@@ -64,7 +62,7 @@ const Clientes = () => {
 
   const headerTabela = () => {
     return (
-      <thead>
+      <thead className="sticky top-0 bg-white dark:bg-boxdark">
         <tr className="title-group">
           <TableTitleItem>ID</TableTitleItem>
           <TableTitleItem>Nome</TableTitleItem>

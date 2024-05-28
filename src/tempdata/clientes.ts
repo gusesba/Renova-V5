@@ -1,4 +1,4 @@
-import { Cliente } from "@/resources/cliente/cliente.resource";
+import { Cliente, ClientePage } from "@/resources/cliente/cliente.resource";
 
 export const clientes: Cliente[] = [
   {
@@ -86,3 +86,12 @@ export const clientes: Cliente[] = [
     indicacao: "Indicação 12",
   },
 ];
+
+export const clientePage: ClientePage = {
+  content: clientes,
+  totalPages: 2,
+  totalElements: 12,
+  size: 10,
+  number: 0,
+  numberOfElements: 10,
+};

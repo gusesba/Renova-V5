@@ -1,4 +1,4 @@
-import { clientes } from "@/tempdata/clientes";
+import { clientePage, clientes } from "@/tempdata/clientes";
 import { Cliente, ClientePage } from "./cliente.resource";
 
 export interface clienteFilter {
@@ -18,6 +18,7 @@ export class ClienteService {
     take: number = 10,
     page: number = 0
   ): Promise<ClientePage> {
+    return clientePage;
     var filtro = this.gerarFiltro(filter);
     const response = await fetch(
       `${this.baseURL}?size=${take}&page=${page}&${filtro}`

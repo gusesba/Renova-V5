@@ -29,7 +29,7 @@ export const DeleteModal: React.FC<DeleteModalProps> = ({
         <div className="w-full px-3 2xsm:w-1/2">
           <button
             onClick={fecharModal}
-            className="block w-full rounded border border-stroke bg-gray p-3 text-center font-medium text-black transition hover:border-meta-1 hover:bg-meta-1 hover:text-white dark:border-strokedark dark:bg-meta-4 dark:text-white dark:hover:border-meta-1 dark:hover:bg-meta-1"
+            className="block w-full rounded border border-stroke bg-gray p-3 text-center font-medium text-black transition-all hover:border-meta-1 hover:bg-meta-1 hover:text-white dark:border-strokedark dark:bg-meta-4 dark:text-white dark:hover:border-meta-1 dark:hover:bg-meta-1"
           >
             Cancelar
           </button>
@@ -37,7 +37,7 @@ export const DeleteModal: React.FC<DeleteModalProps> = ({
         <div className="w-full px-3 2xsm:w-1/2">
           <button
             onClick={handleDelete}
-            className="block w-full rounded border border-meta-1 bg-meta-1 p-3 text-center font-medium text-white transition hover:bg-opacity-90"
+            className="block w-full rounded border border-meta-1 bg-meta-1 p-3 text-center font-medium text-white transition-all hover:bg-opacity-80"
           >
             Excluir
           </button>

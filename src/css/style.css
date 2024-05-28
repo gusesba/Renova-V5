@@ -307,3 +307,14 @@ dialog[open] {
 dialog[closing] {
   animation: fade-out 150ms forwards;
 }
+
+/* Estilos da barra de rolagem */
+div::-webkit-scrollbar {
+  width: 8px;
+}
+
+div::-webkit-scrollbar-thumb {
+  background-color: #999;
+  border-radius: 6px;
+  border: none;
+}
