@@ -1,5 +1,5 @@
 "use client";
-import { Cliente } from "@/resources/cliente/cliente.resource";
+import { Cliente, ClientePage } from "@/resources/cliente/cliente.resource";
 import {
   clienteFilter,
   useClienteService,
@@ -19,12 +19,19 @@ import { Bottom } from "@/components/DataTable/Bottom";
 import { SearchButton } from "@/components/DataTable/SearchButton";
 
 const Clientes = () => {
-  const [clientes, setClientes] = useState<Cliente[]>([]);
+  const [clientes, setClientes] = useState<ClientePage>({
+    content: [],
+    totalElements: 0,
+    totalPages: 1,
+    size: 0,
+    number: 0,
+    numberOfElements: 0,
+  });
   const router = useRouter();
   const [linhasSelecionadas] = useDataTable();
   const clienteService = useClienteService;
   const [take, setTake] = useState<number>(10);
-  const [page, setPage] = useState<number>(1);
+  const [page, setPage] = useState<number>(0);
   const filter = useRef<clienteFilter>({});
 
   const fetchClientes = useCallback(() => {
@@ -39,7 +46,7 @@ const Clientes = () => {
   }, [fetchClientes]);
 
   const linhasTabela = () => {
-    return clientes.map((cliente) => (
+    return clientes.content.map((cliente) => (
       <LinhaTabela
         key={cliente.id}
         linhasSelecionadas={linhasSelecionadas}
@@ -123,13 +130,19 @@ const Clientes = () => {
       <Table>
         <Top take={take} setTake={setTake}>
           {searchInput()}
-          <SearchButton />
+          <SearchButton onClick={fetchClientes} />
         </Top>
         <Content>
           {headerTabela()}
           <tbody>{linhasTabela()}</tbody>
         </Content>
-        <Bottom />
+        <Bottom
+          totalPaginas={clientes.totalPages}
+          paginaAtual={clientes.number}
+          registrosPorPagina={clientes.size}
+          totalRegistros={clientes.totalElements}
+          setPage={setPage}
+        />
       </Table>
     </>
   );

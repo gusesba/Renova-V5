@@ -250,6 +250,10 @@ input[type="search"] {
   @apply h-8 w-8 hover:bg-primary m-[1px] flex items-center justify-center rounded hover:text-white font-medium hover:cursor-pointer;
 }
 
+.page-item-disabled {
+  @apply h-8 w-8 bg-gray dark:bg-graydark m-[1px] flex items-center justify-center rounded font-medium;
+}
+
 .page-item.selected {
   @apply bg-primary text-white hover:cursor-default;
 }

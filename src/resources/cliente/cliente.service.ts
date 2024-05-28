@@ -1,5 +1,5 @@
 import { clientes } from "@/tempdata/clientes";
-import { Cliente } from "./cliente.resource";
+import { Cliente, ClientePage } from "./cliente.resource";
 
 export interface clienteFilter {
   nome?: string;
@@ -11,17 +11,18 @@ export interface clienteFilter {
 }
 
 export class ClienteService {
-  baseURL: string = "http://localhost:8080/v1/images";
+  baseURL: string = "http://localhost:8080/v1/clientes";
 
   async getClientes(
     filter: clienteFilter,
-    take: number,
-    page: number
-  ): Promise<Cliente[]> {
-    console.log(filter, take, page);
-    //const response = await fetch(this.baseURL);
-    //return await response.json();
-    return clientes;
+    take: number = 10,
+    page: number = 0
+  ): Promise<ClientePage> {
+    var filtro = this.gerarFiltro(filter);
+    const response = await fetch(
+      `${this.baseURL}?size=${take}&page=${page}&${filtro}`
+    );
+    return await response.json();
   }
 
   async deleteCliente(id: number): Promise<void> {
@@ -36,6 +37,29 @@ export class ClienteService {
     //return await response.json();
     console.log(ids);
     return;
+  }
+
+  gerarFiltro(filter: clienteFilter): string {
+    var filtro = "";
+    if (filter.nome) {
+      filtro += `nome=${filter.nome}&`;
+    }
+    if (filter.id) {
+      filtro += `id=${filter.id}&`;
+    }
+    if (filter.celular) {
+      filtro += `celular=${filter.celular}&`;
+    }
+    if (filter.apelido) {
+      filtro += `apelido=${filter.apelido}&`;
+    }
+    if (filter.indicacao) {
+      filtro += `indicacao=${filter.indicacao}&`;
+    }
+    if (filter.geral) {
+      filtro += `geral=${filter.geral}&`;
+    }
+    return filtro;
   }
 }
 
