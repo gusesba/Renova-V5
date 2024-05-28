@@ -2,6 +2,7 @@ import { clienteFilter } from "@/resources/cliente/cliente.service";
 import { Dispatch, MutableRefObject, SetStateAction } from "react";
 import { abrirModal } from "../Modal/Modal";
 import { DeleteButton } from "./DeleteButton";
+import { FullScreenButton } from "./FullScreenButton";
 
 interface TopProps extends React.HTMLAttributes<HTMLDivElement> {
   take: number;
@@ -34,13 +35,14 @@ export const Top: React.FC<TopProps> = ({
           {props.children}
           <DeleteButton onClick={abrirModal} />
         </div>
-        <div className="datatable-dropdown m-8">
+        <div className="datatable-dropdown m-8 flex">
           {entriesPerPage()}
           <label className="font-medium">
             <span className=" text-black dark:text-white">
               Registros Por Página
             </span>
           </label>
+          <FullScreenButton />
         </div>
       </div>
     </>

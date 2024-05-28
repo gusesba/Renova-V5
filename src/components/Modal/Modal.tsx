@@ -39,7 +39,7 @@ export const Modal: React.FC<ModalProps> = ({ ...props }: ModalProps) => {
   return (
     <>
       <dialog
-        className="w-screen h-screen bg-black/90 fixed top-0 left-0 z-99999"
+        className="w-screen h-screen bg-black/90 fixed top-0 left-0 z-999999"
         id="modal"
         onClick={handleClick}
       >

@@ -318,3 +318,7 @@ div::-webkit-scrollbar-thumb {
   border-radius: 6px;
   border: none;
 }
+
+.fullscreen {
+  @apply fixed inset-0 z-99999 bg-black bg-opacity-50 flex items-center justify-center h-screen w-screen;
+}
