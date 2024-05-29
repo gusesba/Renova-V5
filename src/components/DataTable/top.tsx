@@ -33,7 +33,6 @@ export const Top: React.FC<TopProps> = ({
       <div className="datatable-top h-20 flex items-center justify-between">
         <div className="datatable-search m-7 flex items-center">
           {props.children}
-          <DeleteButton onClick={abrirModal} />
         </div>
         <div className="datatable-dropdown m-8 flex">
           {entriesPerPage()}

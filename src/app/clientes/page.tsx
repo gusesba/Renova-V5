@@ -17,6 +17,8 @@ import { Content } from "@/components/DataTable/Content";
 import { TableTitleItem } from "@/components/DataTable/TableTitleItem";
 import { Bottom } from "@/components/DataTable/Bottom";
 import { SearchButton } from "@/components/DataTable/SearchButton";
+import { DeleteButton } from "@/components/DataTable/DeleteButton";
+import { abrirModal } from "@/components/Modal/Modal";
 
 const Clientes = () => {
   const [clientes, setClientes] = useState<ClientePage>({
@@ -28,8 +30,15 @@ const Clientes = () => {
     numberOfElements: 0,
   });
   const router = useRouter();
-  const [linhasSelecionadas, take, setTake, page, setPage, filter] =
-    useDataTable<clienteFilter>();
+  const [
+    linhasSelecionadas,
+    setLinhasSelecionadas,
+    take,
+    setTake,
+    page,
+    setPage,
+    filter,
+  ] = useDataTable<clienteFilter>();
   const clienteService = useClienteService;
 
   const fetchClientes = useCallback(() => {
@@ -37,6 +46,10 @@ const Clientes = () => {
       setClientes(data);
     });
   }, [filter, take, page]);
+
+  useEffect(() => {
+    console.log(linhasSelecionadas);
+  }, [linhasSelecionadas]);
 
   //fetching data
   useEffect(() => {
@@ -46,8 +59,10 @@ const Clientes = () => {
   const linhasTabela = () => {
     return clientes.content.map((cliente) => (
       <LinhaTabela
+        linhas={clientes.content}
         key={cliente.id}
         linhasSelecionadas={linhasSelecionadas}
+        setLinhasSelecionadas={setLinhasSelecionadas}
         identificador={cliente.id as number}
         onDoubleClick={() => router.push(`/clientes/${cliente.id}`)}
       >
@@ -129,6 +144,10 @@ const Clientes = () => {
         <Top take={take} setTake={setTake}>
           {searchInput()}
           <SearchButton onClick={fetchClientes} />
+          <DeleteButton
+            show={linhasSelecionadas.length !== 0}
+            onClick={abrirModal}
+          />
         </Top>
         <Content>
           {headerTabela()}

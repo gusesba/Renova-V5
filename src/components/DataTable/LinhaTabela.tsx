@@ -1,28 +1,79 @@
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 
 interface LinhaTabelaProps extends React.HTMLAttributes<HTMLTableRowElement> {
+  linhas: any[];
   linhasSelecionadas: number[];
+  setLinhasSelecionadas: Dispatch<SetStateAction<number[]>>;
   identificador: number;
 }
 
 export const LinhaTabela: React.FC<LinhaTabelaProps> = ({
+  linhas,
   linhasSelecionadas,
+  setLinhasSelecionadas,
   identificador,
   ...props
 }: LinhaTabelaProps) => {
-  const [isSelected, setIsSelected] = useState<boolean>(false);
+  const isSelected = linhasSelecionadas.includes(identificador);
 
-  const toggleSelecionarLinha = () => {
-    setIsSelected(!isSelected);
-    if (isSelected) {
-      linhasSelecionadas.splice(linhasSelecionadas.indexOf(identificador), 1);
+  const toggleSelecionarLinha = (e: any) => {
+    if (!e.ctrlKey) {
+      if (isSelected) {
+        setLinhasSelecionadas(
+          linhasSelecionadas.filter((id) => id !== identificador)
+        );
+      } else {
+        setLinhasSelecionadas([...linhasSelecionadas, identificador]);
+      }
     } else {
-      linhasSelecionadas.push(identificador);
+      if (isSelected) {
+        const lastSelected = linhasSelecionadas[linhasSelecionadas.length - 1];
+
+        const firstIndex = linhas.findIndex(
+          (linha) => linha.id === lastSelected
+        );
+        const lastIndex = linhas.findIndex(
+          (linha) => linha.id === identificador
+        );
+        const novasLinhas: number[] = [];
+        for (
+          let i = Math.min(firstIndex, lastIndex);
+          i <= Math.max(firstIndex, lastIndex);
+          i++
+        ) {
+          novasLinhas.push(linhas[i].id);
+        }
+        setLinhasSelecionadas(
+          linhasSelecionadas.filter((id) => !novasLinhas.includes(id))
+        );
+      } else {
+        const lastSelected = linhasSelecionadas[linhasSelecionadas.length - 1];
+
+        const firstIndex = linhas.findIndex(
+          (linha) => linha.id === lastSelected
+        );
+
+        const lastIndex = linhas.findIndex(
+          (linha) => linha.id === identificador
+        );
+        let novasLinhas = [];
+        for (
+          let i = Math.min(firstIndex, lastIndex);
+          i <= Math.max(firstIndex, lastIndex);
+          i++
+        ) {
+          novasLinhas.push(linhas[i].id);
+        }
+        novasLinhas.push(...linhasSelecionadas);
+        novasLinhas = novasLinhas.filter(
+          (value, index, self) => self.indexOf(value) === index
+        );
+        novasLinhas.slice(novasLinhas.indexOf(identificador), 1);
+        novasLinhas.push(identificador);
+
+        setLinhasSelecionadas(novasLinhas);
+      }
     }
-    if (linhasSelecionadas.length === 0)
-      document.getElementById("data-table-delete")?.classList.toggle("hidden");
-    else
-      document.getElementById("data-table-delete")?.classList.remove("hidden");
   };
 
   return (
