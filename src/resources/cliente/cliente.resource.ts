@@ -6,11 +6,10 @@ export class Cliente {
   indicacao?: string;
 }
 
-export class ClientePage {
-  content: Cliente[] = [];
-  totalElements: number = 0;
-  totalPages: number = 1;
-  size: number = 0;
-  number: number = 0;
-  numberOfElements: number = 0;
-}
+export const clientesHeaders = [
+  { text: "ID", value: "id" },
+  { text: "Nome", value: "nome" },
+  { text: "Celular", value: "celular" },
+  { text: "Apelido", value: "apelido" },
+  { text: "Indicação", value: "indicacao" },
+];

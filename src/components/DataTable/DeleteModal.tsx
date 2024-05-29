@@ -1,15 +1,16 @@
 import { Modal, fecharModal } from "../Modal/Modal";
-import { ClienteService } from "@/resources/cliente/cliente.service";
 import { Warning } from "../Icones/Warning";
 
 interface DeleteModalProps {
   itens: number[];
-  clienteService: ClienteService;
+  deleteList: (itens: number[]) => void;
+  conteudo: string;
 }
 
 export const DeleteModal: React.FC<DeleteModalProps> = ({
   itens,
-  clienteService,
+  deleteList,
+  conteudo,
 }: DeleteModalProps) => {
   const titulo = (titulo: string) => {
     return (
@@ -47,7 +48,7 @@ export const DeleteModal: React.FC<DeleteModalProps> = ({
   };
 
   const handleDelete = () => {
-    clienteService.deleteClientes(itens);
+    deleteList(itens);
     fecharModal();
   };
 
@@ -57,9 +58,9 @@ export const DeleteModal: React.FC<DeleteModalProps> = ({
         <span className="mx-auto inline-block">
           <Warning />
         </span>
-        {titulo("Excluir Clientes")}
+        {titulo(`Excluir ${itens.length} ${conteudo}`)}
         {corpoTexto(
-          "Você tem certeza que deseja excluir os clientes selecionados?"
+          `Você tem certeza que deseja excluir os ${conteudo.toLowerCase()} selecionados?`
         )}
         {botoes()}
       </Modal>

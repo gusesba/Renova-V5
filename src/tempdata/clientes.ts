@@ -1,4 +1,4 @@
-import { Cliente, ClientePage } from "@/resources/cliente/cliente.resource";
+import { Cliente } from "@/resources/cliente/cliente.resource";
 
 export const clientes: Cliente[] = [
   {
@@ -24,7 +24,7 @@ export const clientes: Cliente[] = [
   },
   {
     id: 4,
-    nome: "Cliente 4",
+    nome: "Gustavo Esmanhotto Bareta",
     celular: "999999999",
     apelido: "C4",
     indicacao: "Indicação 4",
@@ -87,7 +87,7 @@ export const clientes: Cliente[] = [
   },
 ];
 
-export const clientePage: ClientePage = {
+export const clientePage = {
   content: clientes,
   totalPages: 2,
   totalElements: 12,

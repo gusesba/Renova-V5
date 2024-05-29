@@ -1,6 +1,6 @@
+import { PaginatedData, TableService } from "@/components/DataTable";
 import { clientePage, clientes } from "@/tempdata/clientes";
-import { Cliente, ClientePage } from "./cliente.resource";
-
+import { Cliente } from "./cliente.resource";
 export interface clienteFilter {
   nome?: string;
   id?: string;
@@ -10,14 +10,14 @@ export interface clienteFilter {
   geral?: string;
 }
 
-export class ClienteService {
+export class ClienteService implements TableService<Cliente, clienteFilter> {
   baseURL: string = "http://localhost:8080/v1/clientes";
 
-  async getClientes(
+  async getPaginated(
     filter: clienteFilter,
     take: number = 10,
     page: number = 0
-  ): Promise<ClientePage> {
+  ): Promise<PaginatedData<Cliente>> {
     return clientePage;
     var filtro = this.gerarFiltro(filter);
     const response = await fetch(
@@ -26,14 +26,14 @@ export class ClienteService {
     return await response.json();
   }
 
-  async deleteCliente(id: number): Promise<void> {
+  async deleteOne(id: number): Promise<void> {
     //const response = await fetch(this.baseURL);
     //return await response.json();
     console.log(id);
     return;
   }
 
-  async deleteClientes(ids: number[]): Promise<void> {
+  async deleteList(ids: number[]): Promise<void> {
     //const response = await fetch(this.baseURL);
     //return await response.json();
     console.log(ids);
