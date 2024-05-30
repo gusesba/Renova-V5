@@ -6,7 +6,7 @@ import { LinhaTabela } from "@/components/DataTable/LinhaTabela";
 import { DeleteModal } from "@/components/DataTable/DeleteModal";
 import { Title } from "@/components/Utils/Title";
 import { Table } from "@/components/DataTable/Table";
-import { Top } from "@/components/DataTable/Top";
+import { Top } from "@/components/DataTable/top";
 import { Content } from "@/components/DataTable/Content";
 import { TableTitleItem } from "@/components/DataTable/TableTitleItem";
 import { Bottom } from "@/components/DataTable/Bottom";
@@ -14,6 +14,8 @@ import { SearchButton } from "@/components/DataTable/SearchButton";
 import { DeleteButton } from "@/components/DataTable/DeleteButton";
 import { abrirModal } from "@/components/Modal/Modal";
 import { CopyButton } from "@/components/DataTable/CopyButton";
+
+//#region Tipos
 
 export interface TableService<T, F> {
   getPaginated: (
@@ -33,6 +35,8 @@ export interface PaginatedData<T> {
   numberOfElements: number;
 }
 
+//#endregion Tipos
+
 export const DataTable = <T, F>({
   titulo,
   caminho,
@@ -46,6 +50,8 @@ export const DataTable = <T, F>({
   path: string;
   service: TableService<T, F>;
 }) => {
+  //#region Variáveis
+
   const [contentPage, setContentPage] = useState<PaginatedData<T>>({
     content: [],
     totalElements: 0,
@@ -54,7 +60,9 @@ export const DataTable = <T, F>({
     number: 0,
     numberOfElements: 0,
   });
+
   const router = useRouter();
+
   const [
     linhasSelecionadas,
     setLinhasSelecionadas,
@@ -66,6 +74,10 @@ export const DataTable = <T, F>({
     headersState,
     setHeadersState,
   ] = useDataTable<F>(headers);
+
+  //#endregion Variáveis
+
+  //#region Funções
 
   const fetchData = useCallback(() => {
     service.getPaginated(filter.current, take, page).then((data) => {
@@ -88,13 +100,20 @@ export const DataTable = <T, F>({
     contentPage.content.forEach((line) => {
       if (linhasSelecionadas.includes(line[key as keyof T] as number)) {
         for (let i = 0; i < headers.length; i++) {
-          columns[i].push(line[headers[i].value as keyof T] as string);
+          let value = line[headers[i].value as keyof T];
+          if (typeof value == "number") {
+            columns[i].push(value.toString());
+          } else if (typeof value == "string") {
+            columns[i].push(value);
+          } else {
+            columns[i].push("");
+          }
         }
       }
     });
 
     const maxValues: number[] = columns.map((column) =>
-      Math.max(...column.map((value) => value.toString().length))
+      Math.max(...column.map((value) => value.length))
     );
 
     let clipBoard = "";
@@ -109,9 +128,17 @@ export const DataTable = <T, F>({
     navigator.clipboard.writeText(clipBoard);
   };
 
+  //#endregion Funções
+
+  //#region Effects
+
   useEffect(() => {
     fetchData();
   }, [fetchData]);
+
+  //#endregion Effects
+
+  //#region Funções de renderização
 
   const linhasTabela = (
     headers: { text: string; value: string }[],
@@ -148,16 +175,22 @@ export const DataTable = <T, F>({
     ));
   };
 
-  const headerTabela = (headers: { text: string; value: string }[]) => {
+  const headerTabela = () => {
     return (
       <thead className="sticky top-0 bg-white dark:bg-boxdark">
         <tr className="title-group">
-          {headers.map((header, index) => (
-            <TableTitleItem key={index}>{header.text}</TableTitleItem>
+          {headersState.map((header, index) => (
+            <TableTitleItem
+              index={index}
+              setHeaders={setHeadersState}
+              key={index}
+            >
+              {header.text}
+            </TableTitleItem>
           ))}
         </tr>
         <tr className="search-group">
-          {headers.map((header, index) => (
+          {headersState.map((header, index) => (
             <th key={index}>
               <input
                 onChange={(e) => handleChange(header.value, e.target.value)}
@@ -185,6 +218,10 @@ export const DataTable = <T, F>({
     );
   };
 
+  //#endregion
+
+  //#region Componente
+
   return (
     <>
       <DeleteModal
@@ -207,7 +244,7 @@ export const DataTable = <T, F>({
           />
         </Top>
         <Content>
-          {headerTabela(headersState)}
+          {headerTabela()}
           <tbody>{linhasTabela(headersState)}</tbody>
         </Content>
         <Bottom
@@ -220,4 +257,6 @@ export const DataTable = <T, F>({
       </Table>
     </>
   );
+
+  //#endregion Componente
 };

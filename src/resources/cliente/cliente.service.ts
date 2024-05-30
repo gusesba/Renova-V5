@@ -18,7 +18,6 @@ export class ClienteService implements TableService<Cliente, clienteFilter> {
     take: number = 10,
     page: number = 0
   ): Promise<PaginatedData<Cliente>> {
-    return clientePage;
     var filtro = this.gerarFiltro(filter);
     const response = await fetch(
       `${this.baseURL}?size=${take}&page=${page}&${filtro}`

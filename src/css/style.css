@@ -274,6 +274,10 @@ input[type="search"] {
   @apply font-medium text-left pl-7 pt-5 pb-3;
 }
 
+.title-group th:last-child {
+  @apply pr-7;
+}
+
 .line-group td {
   @apply font-medium text-left pl-7 pt-6 pb-6;
 }
@@ -311,6 +315,7 @@ dialog[closing] {
 /* Estilos da barra de rolagem */
 div::-webkit-scrollbar {
   width: 8px;
+  height: 8px;
 }
 
 div::-webkit-scrollbar-thumb {
