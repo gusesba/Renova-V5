@@ -6,7 +6,7 @@ import { LinhaTabela } from "@/components/DataTable/LinhaTabela";
 import { DeleteModal } from "@/components/DataTable/DeleteModal";
 import { Title } from "@/components/Utils/Title";
 import { Table } from "@/components/DataTable/Table";
-import { Top } from "@/components/DataTable/top";
+import { Top } from "@/components/DataTable/Top";
 import { Content } from "@/components/DataTable/Content";
 import { TableTitleItem } from "@/components/DataTable/TableTitleItem";
 import { Bottom } from "@/components/DataTable/Bottom";
@@ -14,6 +14,8 @@ import { SearchButton } from "@/components/DataTable/SearchButton";
 import { DeleteButton } from "@/components/DataTable/DeleteButton";
 import { abrirModal } from "@/components/Modal/Modal";
 import { CopyButton } from "@/components/DataTable/CopyButton";
+import { ConfigurationButton } from "./ConfigurationButton";
+import { ConfigurationModal } from "./ConfigurationModal";
 
 //#region Tipos
 
@@ -73,7 +75,9 @@ export const DataTable = <T, F>({
     filter,
     headersState,
     setHeadersState,
-  ] = useDataTable<F>(headers);
+    isEditing,
+    setIsEditing,
+  ] = useDataTable<F>(headers, path);
 
   const [drag, setDrag] = useState<number>(-1);
 
@@ -85,7 +89,7 @@ export const DataTable = <T, F>({
     service.getPaginated(filter.current, take, page).then((data) => {
       setContentPage(data as PaginatedData<T>);
     });
-  }, [filter, take, page]);
+  }, [filter, take, page, service]);
 
   const copyToClipboard = (
     headers: { text: string; value: string }[],
@@ -189,6 +193,7 @@ export const DataTable = <T, F>({
               setHeaders={setHeadersState}
               key={index}
               setDrag={setDrag}
+              isEditing={isEditing}
             >
               {header.text}
             </TableTitleItem>
@@ -234,14 +239,16 @@ export const DataTable = <T, F>({
         itens={linhasSelecionadas}
         deleteList={service.deleteList}
       />
+      <ConfigurationModal editarColunas={setIsEditing} />
       <Title titulo={titulo} caminho={caminho} />
       <Table>
         <Top take={take} setTake={setTake}>
+          <ConfigurationButton onClick={() => abrirModal("config")} />
           {searchInput()}
           <SearchButton onClick={fetchData} />
           <DeleteButton
             show={linhasSelecionadas.length !== 0}
-            onClick={abrirModal}
+            onClick={() => abrirModal("delete")}
           />
           <CopyButton
             show={linhasSelecionadas.length !== 0}

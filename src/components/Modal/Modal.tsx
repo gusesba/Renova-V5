@@ -1,29 +1,35 @@
-import { MouseEventHandler } from "react";
-
-interface ModalProps extends React.HtmlHTMLAttributes<HTMLDialogElement> {}
+interface ModalProps extends React.HtmlHTMLAttributes<HTMLDialogElement> {
+  name: string;
+}
 
 // close when click ouside
-const handleClick: MouseEventHandler<HTMLDialogElement> = (e) => {
+const handleClick = (e: any, name: string) => {
   if ((e.target as HTMLDivElement).id === "background-fade") {
-    fecharModal();
+    fecharModal(name);
   }
 };
 
 //close when esc key pressed
-const handleKeyDown = (e: KeyboardEvent) => {
+const handleKeyDown = (e: any, name: string) => {
   if (e.key === "Escape") {
-    fecharModal();
+    fecharModal(name);
   }
 };
 
-export const abrirModal = () => {
-  (document.getElementById("modal") as HTMLDialogElement).show();
-  document.addEventListener("keydown", handleKeyDown);
+const keydownHandlers: { [key: string]: (e: KeyboardEvent) => void } = {};
+
+export const abrirModal = (name: string) => {
+  (document.getElementById(`modal-${name}`) as HTMLDialogElement).show();
+  keydownHandlers[name] = (e) => handleKeyDown(e, name);
+  document.addEventListener("keydown", keydownHandlers[name]);
 };
 
-export const fecharModal = () => {
-  const modal = document.getElementById("modal") as HTMLDialogElement;
-  document.removeEventListener("keydown", handleKeyDown);
+export const fecharModal = (name: string) => {
+  const modal = document.getElementById(`modal-${name}`) as HTMLDialogElement;
+  if (keydownHandlers[name]) {
+    document.removeEventListener("keydown", keydownHandlers[name]);
+    delete keydownHandlers[name];
+  }
   modal.setAttribute("closing", "");
   modal.addEventListener(
     "animationend",
@@ -35,13 +41,13 @@ export const fecharModal = () => {
   );
 };
 
-export const Modal: React.FC<ModalProps> = ({ ...props }: ModalProps) => {
+export const Modal: React.FC<ModalProps> = ({ name, ...props }: ModalProps) => {
   return (
     <>
       <dialog
         className="w-screen h-screen bg-black/90 fixed top-0 left-0 z-999999"
-        id="modal"
-        onClick={handleClick}
+        id={`modal-${name}`}
+        onClick={(e) => handleClick(e, name)}
       >
         <div
           className="w-full h-full flex justify-center items-center"

@@ -1,4 +1,6 @@
 import { Dispatch, MutableRefObject, SetStateAction } from "react";
+import { Gear } from "../Icones/Gear";
+import { ConfigurationButton } from "./ConfigurationButton";
 import { FullScreenButton } from "./FullScreenButton";
 
 interface TopProps extends React.HTMLAttributes<HTMLDivElement> {

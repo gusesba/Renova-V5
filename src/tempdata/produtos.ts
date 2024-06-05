@@ -1,0 +1,102 @@
+import { Produto } from "@/resources/produto/produto.resource";
+
+const produtos: Produto[] = [
+  {
+    id: 1,
+    tipo: "Tipo 1",
+    marca: "Marca 1",
+    tamanho: "Tamanho 1",
+    preco: 1.99,
+    descricao: "Descrição 1",
+  },
+
+  {
+    id: 2,
+    tipo: "Tipo 2",
+    marca: "Marca 2",
+    tamanho: "Tamanho 2",
+    preco: 133.99,
+    descricao: "Descrição 2",
+  },
+  {
+    id: 3,
+    tipo: "Tipo 3",
+    marca: "Marca 3",
+    tamanho: "Tamanho 3",
+    preco: 23.99,
+    descricao: "Descrição 3",
+  },
+  {
+    id: 4,
+    tipo: "Tipo 4",
+    marca: "Marca 4",
+    tamanho: "Tamanho 4",
+    preco: 1.99,
+    descricao: "Descrição 4",
+  },
+  {
+    id: 5,
+    tipo: "Tipo 5",
+    marca: "Marca 5",
+    tamanho: "Tamanho 5",
+    preco: 1.99,
+    descricao: "Descrição 5",
+  },
+  {
+    id: 6,
+    tipo: "Tipo 6",
+    marca: "Marca 6",
+    tamanho: "Tamanho 6",
+    preco: 14.99,
+    descricao: "Descrição 6",
+  },
+  {
+    id: 7,
+    tipo: "Tipo 7",
+    marca: "Marca 7",
+    tamanho: "Tamanho 7",
+    preco: 1.99,
+    descricao: "Descrição 7",
+  },
+  {
+    id: 8,
+    tipo: "Tipo 8",
+    marca: "Marca 8",
+    tamanho: "Tamanho 8",
+    preco: 1.99,
+    descricao: "Descrição 8",
+  },
+  {
+    id: 9,
+    tipo: "Tipo 9",
+    marca: "Marca 9",
+    tamanho: "Tamanho 9",
+    preco: 13.99,
+    descricao: "Descrição 9",
+  },
+  {
+    id: 10,
+    tipo: "Tipo 10",
+    marca: "Marca 10",
+    tamanho: "Tamanho 10",
+    preco: 12.99,
+    descricao: "Descrição 10",
+  },
+  {
+    id: 11,
+    tipo: "Tipo 11",
+    marca: "Marca 11",
+    tamanho: "Tamanho 11",
+    preco: 11.99,
+    descricao: "Descrição 11",
+  },
+];
+
+export const produtoPage = {
+  content: produtos,
+  totalPages: 2,
+  totalElements: 11,
+  size: 10,
+  number: 0,
+  numberOfElements: 10,
+};

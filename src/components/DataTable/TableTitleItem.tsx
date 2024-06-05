@@ -2,7 +2,6 @@ import { Dispatch, SetStateAction } from "react";
 import { ArrowDown } from "../Icones/ArrowDown";
 import { ArrowUp } from "../Icones/ArrowUp";
 import { X } from "../Icones/X";
-import { headers } from "next/headers";
 
 interface TableItemProps {
   children?: React.ReactNode;
@@ -17,6 +16,7 @@ interface TableItemProps {
   index: number;
   setDrag: Dispatch<SetStateAction<number>>;
   drag: number;
+  isEditing: boolean;
 }
 
 export const TableTitleItem: React.FC<TableItemProps> = ({
@@ -25,10 +25,11 @@ export const TableTitleItem: React.FC<TableItemProps> = ({
   index,
   setDrag,
   drag,
+  isEditing,
 }: TableItemProps) => {
   return (
     <th
-      draggable
+      draggable={isEditing}
       id={`header-${index}`}
       onDragStart={() => {
         setDrag(index);
@@ -57,13 +58,15 @@ export const TableTitleItem: React.FC<TableItemProps> = ({
             </span>
           </div>
         </div>
-        <button
-          onClick={() =>
-            setHeaders((headers) => headers.filter((_, i) => i !== index))
-          }
-        >
-          <X />
-        </button>
+        {isEditing ? (
+          <button
+            onClick={() =>
+              setHeaders((headers) => headers.filter((_, i) => i !== index))
+            }
+          >
+            <X />
+          </button>
+        ) : null}
       </div>
     </th>
   );

@@ -1,13 +1,16 @@
+"use client";
 import {
   Dispatch,
   MutableRefObject,
   SetStateAction,
+  useEffect,
   useRef,
   useState,
 } from "react";
 
 function useDataTable<A>(
-  headers: { text: string; value: string }[]
+  headers: { text: string; value: string }[],
+  path: string
 ): [
   number[],
   Dispatch<SetStateAction<number[]>>,
@@ -17,14 +20,40 @@ function useDataTable<A>(
   Dispatch<SetStateAction<number>>,
   MutableRefObject<A>,
   { text: string; value: string }[],
-  Dispatch<SetStateAction<{ text: string; value: string }[]>>
+  Dispatch<SetStateAction<{ text: string; value: string }[]>>,
+  boolean,
+  Dispatch<SetStateAction<boolean>>
 ] {
+  const [isEditing, setIsEditing] = useState<boolean>(false);
   const [linhasSelecionadas, setLinhasSelecionadas] = useState<number[]>([]);
   const [take, setTake] = useState<number>(10);
   const [page, setPage] = useState<number>(0);
   const [header, setHeader] =
     useState<{ text: string; value: string }[]>(headers);
   const filter = useRef<A>({} as A);
+
+  useEffect(() => {
+    const headerStorage = localStorage.getItem(`header-${path}`);
+    if (headerStorage) {
+      setHeader(JSON.parse(headerStorage));
+    }
+  }, [path]);
+
+  const updateHeader = (
+    setStateAction: SetStateAction<
+      {
+        text: string;
+        value: string;
+      }[]
+    >
+  ) => {
+    const newValue =
+      typeof setStateAction === "function"
+        ? setStateAction(header)
+        : setStateAction;
+    localStorage.setItem(`header-${path}`, JSON.stringify(newValue));
+    setHeader(newValue);
+  };
 
   return [
     linhasSelecionadas,
@@ -35,7 +64,9 @@ function useDataTable<A>(
     setPage,
     filter,
     header,
-    setHeader,
+    updateHeader,
+    isEditing,
+    setIsEditing,
   ];
 }
 

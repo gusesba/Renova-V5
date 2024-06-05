@@ -34,7 +34,7 @@ export const FullScreenButton = () => {
 
   return (
     <button
-      className="ml-5 hover:scale-125 transition-all"
+      className="ml-3 hover:scale-125 transition-all"
       onClick={toggleFullscreen}
     >
       <FullScreen />{" "}
