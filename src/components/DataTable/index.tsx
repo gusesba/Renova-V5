@@ -75,6 +75,8 @@ export const DataTable = <T, F>({
     setHeadersState,
   ] = useDataTable<F>(headers);
 
+  const [drag, setDrag] = useState<number>(-1);
+
   //#endregion Variáveis
 
   //#region Funções
@@ -167,6 +169,7 @@ export const DataTable = <T, F>({
               </td>
             );
           }
+          if (header.value === "") return <td key={index}></td>;
           return (
             <td key={index}>{linha[header.value as keyof T] as string}</td>
           );
@@ -181,9 +184,11 @@ export const DataTable = <T, F>({
         <tr className="title-group">
           {headersState.map((header, index) => (
             <TableTitleItem
+              drag={drag}
               index={index}
               setHeaders={setHeadersState}
               key={index}
+              setDrag={setDrag}
             >
               {header.text}
             </TableTitleItem>
