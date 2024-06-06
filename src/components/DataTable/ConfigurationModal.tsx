@@ -236,6 +236,8 @@ export const ConfigurationModal = <F,>({
         ref={filterNameRef}
         className="filter-input datatable-input  p-5  pt-[10px]  pb-[10px] w-100 mt-4 dark:text-gray"
         type="search"
+        placeholder="Nome do Filtro"
+        autoComplete={"off"}
       />
     );
   };

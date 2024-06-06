@@ -16,7 +16,6 @@ import { abrirModal } from "@/components/Modal/Modal";
 import { CopyButton } from "@/components/DataTable/CopyButton";
 import { ConfigurationButton } from "./ConfigurationButton";
 import { ConfigurationModal } from "./ConfigurationModal";
-import { Plus } from "../Icones/Plus";
 import { Check } from "../Icones/Check";
 
 //#region Tipos
@@ -205,6 +204,7 @@ export const DataTable = <T, F>({
           {headersState.map((header, index) => (
             <th key={index}>
               <input
+                autoComplete={"off"}
                 id={`filtro-${header.value}`}
                 className="filter-input"
                 onChange={(e) => handleChange(header.value, e.target.value)}
@@ -229,6 +229,7 @@ export const DataTable = <T, F>({
         className="filter-input datatable-input  p-5  pt-[10px]  pb-[10px] w-100 "
         placeholder="Pesquisar..."
         type="search"
+        autoComplete={"off"}
       />
     );
   };
