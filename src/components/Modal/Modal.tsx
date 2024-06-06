@@ -1,5 +1,6 @@
 interface ModalProps extends React.HtmlHTMLAttributes<HTMLDialogElement> {
   name: string;
+  size?: "sm" | "md" | "lg";
 }
 
 // close when click ouside
@@ -41,7 +42,11 @@ export const fecharModal = (name: string) => {
   );
 };
 
-export const Modal: React.FC<ModalProps> = ({ name, ...props }: ModalProps) => {
+export const Modal: React.FC<ModalProps> = ({
+  name,
+  size = "md",
+  ...props
+}: ModalProps) => {
   return (
     <>
       <dialog
@@ -53,7 +58,15 @@ export const Modal: React.FC<ModalProps> = ({ name, ...props }: ModalProps) => {
           className="w-full h-full flex justify-center items-center"
           id="background-fade"
         >
-          <div className="h-[24rem] w-[90%] sm:w-[36rem] bg-white dark:bg-boxdark rounded-lg">
+          <div
+            className={
+              size == "md"
+                ? `h-[24rem] w-[90%] sm:w-[36rem] bg-white dark:bg-boxdark rounded-lg`
+                : size == "sm"
+                ? `h-[16rem] w-[90%] sm:w-[36rem] bg-white dark:bg-boxdark rounded-lg`
+                : `h-[32rem] w-[90%] sm:w-[36rem] bg-white dark:bg-boxdark rounded-lg`
+            }
+          >
             <div className="w-full h-full text-center px-20 py-12">
               {props.children}
             </div>

@@ -203,6 +203,7 @@ export const DataTable = <T, F>({
           {headersState.map((header, index) => (
             <th key={index}>
               <input
+                id={`filtro-${header.value}`}
                 className="filter-input"
                 onChange={(e) => handleChange(header.value, e.target.value)}
                 type="search"
@@ -222,6 +223,7 @@ export const DataTable = <T, F>({
     return (
       <input
         onChange={(e) => handleChange("geral", e.target.value)}
+        id="filtro-geral"
         className="filter-input datatable-input  p-5  pt-[10px]  pb-[10px] w-100 "
         placeholder="Pesquisar..."
         type="search"
@@ -241,6 +243,7 @@ export const DataTable = <T, F>({
         deleteList={service.deleteList}
       />
       <ConfigurationModal
+        name={path}
         editarColunas={setIsEditing}
         fetchData={fetchData}
         filtro={filter}
