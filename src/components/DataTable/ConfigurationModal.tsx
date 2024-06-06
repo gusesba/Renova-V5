@@ -102,6 +102,16 @@ export const ConfigurationModal = <F,>({
     );
   };
 
+  const semFiltroTexto = () => {
+    return (
+      <div className="flex justify-center items-center h-80">
+        <span className="text-center dark:text-gray">
+          Não há filtros salvos
+        </span>
+      </div>
+    );
+  };
+
   const botoesSalvarFiltro = () => {
     return (
       <div className="-mx-3 flex flex-wrap gap-y-4 mt-5">
@@ -145,17 +155,91 @@ export const ConfigurationModal = <F,>({
     );
   };
 
+  const voltarBotao = () => {
+    return (
+      <button
+        onClick={() => {
+          setConfigFilterState("config");
+        }}
+        className="mt-4 w-full rounded border border-stroke bg-gray p-3 text-center font-medium text-black transition-all hover:border-green-500 hover:bg-green-500 hover:text-white dark:border-strokedark dark:bg-meta-4 dark:text-white dark:hover:border-green-500 dark:hover:bg-green-500"
+      >
+        Voltar
+      </button>
+    );
+  };
+
+  const botoesFiltros = () => {
+    return (
+      <div className="flex flex-col gap-y-4 mt-4 overflow-auto h-80">
+        {localStorage.getItem(`filtros-${name}`) == null
+          ? semFiltroTexto()
+          : localStorage.getItem(`filtros-${name}`) == "{}"
+          ? semFiltroTexto()
+          : Object.keys(
+              JSON.parse(localStorage.getItem(`filtros-${name}`) || "{}")
+            ).map((filtroItem) => (
+              <div className="flex">
+                <button
+                  onClick={() => {
+                    const novoFiltro = JSON.parse(
+                      localStorage.getItem(`filtros-${name}`) || "{}"
+                    )[filtroItem];
+                    filtro.current = novoFiltro;
+                    limparFiltro();
+                    Object.keys(novoFiltro).forEach((key) => {
+                      const input = document.getElementById(`filtro-${key}`);
+                      if (input) {
+                        (input as HTMLInputElement).value = novoFiltro[key];
+                      }
+                    });
+
+                    fecharModal("config");
+                    setConfigFilterState("config");
+                    fetchData();
+                  }}
+                  className="w-full rounded border border-stroke bg-gray p-3 text-center font-medium text-black transition-all hover:border-green-500 hover:bg-green-500 hover:text-white dark:border-strokedark dark:bg-meta-4 dark:text-white dark:hover:border-green-500 dark:hover:bg-green-500"
+                >
+                  {filtroItem}
+                </button>
+                <button
+                  onClick={() => {
+                    const filtros = JSON.parse(
+                      localStorage.getItem(`filtros-${name}`) || "{}"
+                    );
+                    delete filtros[filtroItem];
+                    localStorage.setItem(
+                      `filtros-${name}`,
+                      JSON.stringify(filtros)
+                    );
+                    setUpdateModal(!updateModal);
+                  }}
+                  className="ml-2 rounded border border-stroke bg-gray p-3 text-center font-medium text-black transition-all hover:border-meta-1 hover:bg-meta-1 hover:text-white dark:border-strokedark dark:bg-meta-4 dark:text-white dark:hover:border-meta-1 dark:hover:bg-meta-1"
+                >
+                  <X />
+                </button>
+              </div>
+            ))}
+      </div>
+    );
+  };
+
+  const inputNomeFiltro = () => {
+    return (
+      <input
+        ref={filterNameRef}
+        className="filter-input datatable-input  p-5  pt-[10px]  pb-[10px] w-100 mt-4 dark:text-gray"
+        type="search"
+      />
+    );
+  };
+
   if (configFilterState === "salvarFiltro") {
     return (
       <Modal size="sm" name="config">
         <span className="flex justify-center items-center">
           {titulo("Salvar Filtro")}
         </span>
-        <input
-          ref={filterNameRef}
-          className="filter-input datatable-input  p-5  pt-[10px]  pb-[10px] w-100 mt-4 dark:text-gray"
-          type="search"
-        />
+        {inputNomeFiltro()}
         {botoesSalvarFiltro()}
       </Modal>
     );
@@ -163,64 +247,12 @@ export const ConfigurationModal = <F,>({
 
   if (configFilterState === "recuperarFiltro") {
     return (
-      <Modal name="config">
+      <Modal size="lg" name="config">
         <span className="flex justify-center items-center">
           {titulo("Recuperar Filtro")}
         </span>
-        <div className="flex flex-col gap-y-4 mt-4">
-          {Object.keys(
-            JSON.parse(localStorage.getItem(`filtros-${name}`) || "{}")
-          ).map((filtroItem) => (
-            <div className="flex">
-              <button
-                onClick={() => {
-                  const novoFiltro = JSON.parse(
-                    localStorage.getItem(`filtros-${name}`) || "{}"
-                  )[filtroItem];
-                  filtro.current = novoFiltro;
-                  limparFiltro();
-                  Object.keys(novoFiltro).forEach((key) => {
-                    const input = document.getElementById(`filtro-${key}`);
-                    if (input) {
-                      (input as HTMLInputElement).value = novoFiltro[key];
-                    }
-                  });
-
-                  fecharModal("config");
-                  setConfigFilterState("config");
-                  fetchData();
-                }}
-                className="w-full rounded border border-stroke bg-gray p-3 text-center font-medium text-black transition-all hover:border-green-500 hover:bg-green-500 hover:text-white dark:border-strokedark dark:bg-meta-4 dark:text-white dark:hover:border-green-500 dark:hover:bg-green-500"
-              >
-                {filtroItem}
-              </button>
-              <button
-                onClick={() => {
-                  const filtros = JSON.parse(
-                    localStorage.getItem(`filtros-${name}`) || "{}"
-                  );
-                  delete filtros[filtroItem];
-                  localStorage.setItem(
-                    `filtros-${name}`,
-                    JSON.stringify(filtros)
-                  );
-                  setUpdateModal(!updateModal);
-                }}
-                className="ml-2 rounded border border-stroke bg-gray p-3 text-center font-medium text-black transition-all hover:border-meta-1 hover:bg-meta-1 hover:text-white dark:border-strokedark dark:bg-meta-4 dark:text-white dark:hover:border-meta-1 dark:hover:bg-meta-1"
-              >
-                <X />
-              </button>
-            </div>
-          ))}
-          <button
-            onClick={() => {
-              setConfigFilterState("config");
-            }}
-            className="w-full rounded border border-stroke bg-gray p-3 text-center font-medium text-black transition-all hover:border-green-500 hover:bg-green-500 hover:text-white dark:border-strokedark dark:bg-meta-4 dark:text-white dark:hover:border-green-500 dark:hover:bg-green-500"
-          >
-            Voltar
-          </button>
-        </div>
+        {botoesFiltros()}
+        {voltarBotao()}
       </Modal>
     );
   }
