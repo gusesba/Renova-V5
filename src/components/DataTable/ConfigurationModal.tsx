@@ -15,11 +15,15 @@ export const ConfigurationModal = <F,>({
   filtro,
   fetchData,
   name,
+  headers,
+  setHeaders,
 }: {
   editarColunas: Dispatch<SetStateAction<boolean>>;
   filtro: MutableRefObject<F>;
   fetchData: () => void;
   name: string;
+  headers: { text: string; value: string }[];
+  setHeaders: Dispatch<SetStateAction<{ text: string; value: string }[]>>;
 }) => {
   const [configFilterState, setConfigFilterState] = useState("config");
   const filterNameRef = useRef<HTMLInputElement>(null);
@@ -38,7 +42,10 @@ export const ConfigurationModal = <F,>({
         <button
           onClick={() => {
             fecharModal("config");
-            editarColunas((editar) => !editar);
+            editarColunas((editar) => {
+              editar == false && setHeaders(headers);
+              return !editar;
+            });
           }}
           className="w-73 rounded border border-stroke bg-gray p-3 text-center font-medium text-black transition-all hover:border-green-500 hover:bg-green-500 hover:text-white dark:border-strokedark dark:bg-meta-4 dark:text-white dark:hover:border-green-500 dark:hover:bg-green-500"
         >

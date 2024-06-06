@@ -60,6 +60,7 @@ export const TableTitleItem: React.FC<TableItemProps> = ({
         </div>
         {isEditing ? (
           <button
+            className="hover:scale-125 transition-all"
             onClick={() =>
               setHeaders((headers) => headers.filter((_, i) => i !== index))
             }

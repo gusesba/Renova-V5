@@ -16,6 +16,8 @@ import { abrirModal } from "@/components/Modal/Modal";
 import { CopyButton } from "@/components/DataTable/CopyButton";
 import { ConfigurationButton } from "./ConfigurationButton";
 import { ConfigurationModal } from "./ConfigurationModal";
+import { Plus } from "../Icones/Plus";
+import { Check } from "../Icones/Check";
 
 //#region Tipos
 
@@ -231,6 +233,17 @@ export const DataTable = <T, F>({
     );
   };
 
+  const finishEditingButton = () => {
+    return (
+      <button
+        className="mr-4 hover:scale-125 transition-all"
+        onClick={() => setIsEditing(false)}
+      >
+        <Check />
+      </button>
+    );
+  };
+
   //#endregion
 
   //#region Componente
@@ -247,11 +260,14 @@ export const DataTable = <T, F>({
         editarColunas={setIsEditing}
         fetchData={fetchData}
         filtro={filter}
+        setHeaders={setHeadersState}
+        headers={headers}
       />
       <Title titulo={titulo} caminho={caminho} />
       <Table>
         <Top take={take} setTake={setTake}>
           <ConfigurationButton onClick={() => abrirModal("config")} />
+          {isEditing && finishEditingButton()}
           {searchInput()}
           <SearchButton onClick={fetchData} />
           <DeleteButton
