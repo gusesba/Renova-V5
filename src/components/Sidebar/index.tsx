@@ -103,7 +103,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                   sidebarExpanded ? handleClick() : setSidebarExpanded(true);
                 }}
               >
-                <BagIcon />
+                <BagIcon className="fill-current" />
                 Produtos
                 <SidebarArrowUpIcon open={open} />
               </Link>
@@ -152,7 +152,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                   sidebarExpanded ? handleClick() : setSidebarExpanded(true);
                 }}
               >
-                <CartIcon />
+                <CartIcon className="fill-current" />
                 Saídas
                 <SidebarArrowUpIcon open={open} />
               </Link>

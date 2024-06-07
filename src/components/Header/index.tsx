@@ -8,6 +8,7 @@ import { Search as SearchIcon } from "../Icones/Search";
 import { Table } from "../Icones/Table";
 import { useRef, useState } from "react";
 import { Plus } from "../Icones/Plus";
+import { Client } from "../Icones/Client";
 
 const Header = (props: {
   sidebarOpen: string | boolean | undefined;
@@ -17,27 +18,27 @@ const Header = (props: {
   const searchItems = [
     {
       name: "Tabela Clientes",
-      icon: <Table height={24} width={24} className="fill-primary/80" />,
+      icon: <Table height={24} width={24} className="fill-primary" />,
       link: "/clientes",
     },
     {
       name: "Novo Clientes",
-      icon: <Plus height={24} width={24} className="fill-primary/80" />,
+      icon: <Plus height={24} width={24} className="fill-primary" />,
       link: "/clientes/novo",
     },
     {
       name: "Tabela Estoque",
-      icon: <Table height={24} width={24} className="fill-primary/80" />,
+      icon: <Table height={24} width={24} className="fill-primary" />,
       link: "/produtos",
     },
     {
       name: "Tabela Saídas",
-      icon: <Table height={24} width={24} className="fill-primary/80" />,
+      icon: <Table height={24} width={24} className="fill-primary" />,
       link: "/saidas",
     },
     {
       name: "Tabela Grupo Saídas",
-      icon: <Table height={24} width={24} className="fill-primary/80" />,
+      icon: <Table height={24} width={24} className="fill-primary" />,
       link: "/saidas/grupo",
     },
   ];
@@ -46,7 +47,7 @@ const Header = (props: {
     return (
       <div
         id="drop-search"
-        className="-left-2 top-[52.3px] rounded-b-lg bg-slate-50 shadow-2xl  w-full h-60 hidden overflow-auto"
+        className="-left-2 top-[52.3px] rounded-b-lg bg-slate-50 dark:bg-boxdark shadow-2xl w-80 h-60 hidden overflow-auto border-t border-primary/20"
       >
         {searchItems.map((item, index) => {
           const valoresPesquisa = searchValue
@@ -64,9 +65,12 @@ const Header = (props: {
           if (!itemEncontrado) return null;
           return (
             <Link href={item.link} key={index}>
-              <div className="hover:bg-primary/10 hover:cursor-pointer flex items-center px-10 border-b border-primary/40 h-15">
+              <div
+                onClick={() => setSearchValue("")}
+                className="hover:bg-primary/10 hover:cursor-pointer flex items-center px-10 h-15"
+              >
                 {item.icon}
-                <h1 className="font-medium text-xl ml-2 ">{item.name}</h1>
+                <h1 className="font-medium text-l ml-2 ">{item.name}</h1>
               </div>
             </Link>
           );

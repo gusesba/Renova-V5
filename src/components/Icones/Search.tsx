@@ -1,6 +1,8 @@
 import React from "react";
 
-export const Search = () => {
+interface SearchProps extends React.SVGProps<SVGSVGElement> {}
+
+export const Search: React.FC<SearchProps> = ({ ...props }: SearchProps) => {
   return (
     <svg
       className="fill-body hover:fill-primary dark:fill-bodydark dark:hover:fill-primary"
@@ -9,6 +11,7 @@ export const Search = () => {
       viewBox="0 0 20 20"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      {...props}
     >
       <path
         fillRule="evenodd"

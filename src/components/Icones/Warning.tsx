@@ -1,6 +1,8 @@
 import React from "react";
 
-export const Warning = () => {
+interface WarningProps extends React.SVGProps<SVGSVGElement> {}
+
+export const Warning: React.FC<WarningProps> = ({ ...props }: WarningProps) => {
   return (
     <svg
       width="60"
@@ -8,6 +10,7 @@ export const Warning = () => {
       viewBox="0 0 60 60"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      {...props}
     >
       <rect opacity="0.1" width="60" height="60" rx="30" fill="#DC2626"></rect>
       <path

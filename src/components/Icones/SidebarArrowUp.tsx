@@ -1,11 +1,12 @@
 import React from "react";
 
-interface SidebarArrowUpProps {
+interface SidebarArrowUpProps extends React.SVGProps<SVGSVGElement> {
   open: boolean;
 }
 
 export const SidebarArrowUp: React.FC<SidebarArrowUpProps> = ({
   open,
+  ...props
 }: SidebarArrowUpProps) => {
   return (
     <svg
@@ -17,6 +18,7 @@ export const SidebarArrowUp: React.FC<SidebarArrowUpProps> = ({
       viewBox="0 0 20 20"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      {...props}
     >
       <path
         fillRule="evenodd"
