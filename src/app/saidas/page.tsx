@@ -1,22 +1,20 @@
 "use client";
 import { DataTable } from "@/components/DataTable";
-import { useGrupoSaidasService } from "@/resources/saidas/grupoSaida.service";
-
-import { grupoSaidasFilter } from "@/resources/saidas/grupoSaida.service";
+import { Saida, saidaHeaders } from "@/resources/saidas/saida.resource";
 import {
-  GrupoSaidas,
-  grupoSaidasHeaders,
-} from "@/resources/saidas/saida.resource";
+  saidasFilter,
+  useSaidasService,
+} from "@/resources/saidas/saida.service";
 
 const Saidas = () => {
-  const grupoSaidasService = useGrupoSaidasService;
+  const saidasService = useSaidasService;
   return (
-    <DataTable<GrupoSaidas, grupoSaidasFilter>
-      titulo="Grupo de Saídas"
+    <DataTable<Saida, saidasFilter>
+      titulo="Saídas"
       caminho="Saídas /"
-      headers={grupoSaidasHeaders}
+      headers={saidaHeaders}
       path="saidas"
-      service={grupoSaidasService}
+      service={saidasService}
     />
   );
 };
