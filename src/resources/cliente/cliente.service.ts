@@ -9,7 +9,7 @@ export interface clienteFilter {
   indicacao?: string;
   geral?: string;
 }
-
+// #TODO - Implementar segurança
 export class ClienteService implements TableService<Cliente, clienteFilter> {
   baseURL: string = "http://localhost:8080/v1/clientes";
 
@@ -26,6 +26,7 @@ export class ClienteService implements TableService<Cliente, clienteFilter> {
     return await response.json();
   }
 
+  // #TODO - Implementar delete
   async deleteOne(id: number): Promise<void> {
     //const response = await fetch(this.baseURL);
     //return await response.json();
@@ -33,12 +34,16 @@ export class ClienteService implements TableService<Cliente, clienteFilter> {
     return;
   }
 
+  // #TODO - Implementar deleteList
   async deleteList(ids: number[]): Promise<void> {
     //const response = await fetch(this.baseURL);
     //return await response.json();
     console.log(ids);
     return;
   }
+
+  // #TODO - Implementar update
+  // #TODO - Implementar create
 
   gerarFiltro(filter: clienteFilter): string {
     var filtro = "";

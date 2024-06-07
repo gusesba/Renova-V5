@@ -136,6 +136,44 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
     );
   };
 
+  const saidasDropdown = () => {
+    return (
+      <SidebarLinkGroup activeCondition={pathname.includes("saidas")}>
+        {(handleClick, open) => {
+          return (
+            <>
+              <Link
+                href="#"
+                className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
+                  pathname.includes("saidas") && "bg-graydark dark:bg-meta-4"
+                }`}
+                onClick={(e) => {
+                  e.preventDefault();
+                  sidebarExpanded ? handleClick() : setSidebarExpanded(true);
+                }}
+              >
+                <CartIcon />
+                Saídas
+                <SidebarArrowUpIcon open={open} />
+              </Link>
+              {/* <!-- Dropdown Menu Start --> */}
+              <div
+                className={`translate transform overflow-hidden ${
+                  !open && "hidden"
+                }`}
+              >
+                <ul className="mb-5.5 mt-4 flex flex-col gap-2.5 pl-6">
+                  {saidas()}
+                </ul>
+              </div>
+              {/* <!-- Dropdown Menu End --> */}
+            </>
+          );
+        }}
+      </SidebarLinkGroup>
+    );
+  };
+
   const saidas = () => {
     return (
       <li>
@@ -145,8 +183,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
             pathname.includes("saidas") && "bg-graydark dark:bg-meta-4"
           }`}
         >
-          <CartIcon />
-          Saídas
+          <TableIcon />
+          Grupo de Saídas
         </Link>
       </li>
     );
@@ -230,7 +268,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               {clientesDropdown()}
               {produtosDropdown()}
 
-              {saidas()}
+              {saidasDropdown()}
             </ul>
           </div>
         </nav>

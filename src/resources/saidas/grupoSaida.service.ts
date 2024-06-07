@@ -1,26 +1,28 @@
 import { PaginatedData, TableService } from "@/components/DataTable";
+import { gruposSaidasPage } from "@/tempdata/gruposSaidas";
 import { produtoPage } from "@/tempdata/produtos";
-import { Produto } from "./produto.resource";
+import { GrupoSaidas } from "./saida.resource";
 
-export interface produtoFilter {
+export interface grupoSaidasFilter {
   id?: string;
-  tipo?: string;
-  marca?: string;
-  tamanho?: string;
-  preco?: string;
-  descricao?: string;
+  comprador?: string;
+  data?: string;
+  quantidade?: string;
+  valor?: string;
 }
 
 // #TODO - Implementar segurança
-export class ProdutoService implements TableService<Produto, produtoFilter> {
+export class GrupoSaidasService
+  implements TableService<GrupoSaidas, grupoSaidasFilter>
+{
   baseURL: string = "http://localhost:8080/v1/clientes";
 
   async getPaginated(
-    filter: produtoFilter,
+    filter: grupoSaidasFilter,
     take: number = 10,
     page: number = 0
-  ): Promise<PaginatedData<Produto>> {
-    return produtoPage;
+  ): Promise<PaginatedData<GrupoSaidas>> {
+    return gruposSaidasPage;
     var filtro = this.gerarFiltro(filter);
     const response = await fetch(
       `${this.baseURL}?size=${take}&page=${page}&${filtro}`
@@ -47,28 +49,25 @@ export class ProdutoService implements TableService<Produto, produtoFilter> {
   // #TODO - Implementar update
   // #TODO - Implementar create
 
-  gerarFiltro(filter: produtoFilter): string {
+  gerarFiltro(filter: grupoSaidasFilter): string {
     var filtro = "";
     if (filter.id) {
       filtro += `id=${filter.id}&`;
     }
-    if (filter.tipo) {
-      filtro += `tipo=${filter.tipo}&`;
+    if (filter.comprador) {
+      filtro += `comprador=${filter.comprador}&`;
     }
-    if (filter.marca) {
-      filtro += `marca=${filter.marca}&`;
+    if (filter.data) {
+      filtro += `data=${filter.data}&`;
     }
-    if (filter.tamanho) {
-      filtro += `tamanho=${filter.tamanho}&`;
+    if (filter.quantidade) {
+      filtro += `quantidade=${filter.quantidade}&`;
     }
-    if (filter.preco) {
-      filtro += `preco=${filter.preco}&`;
-    }
-    if (filter.descricao) {
-      filtro += `descricao=${filter.descricao}&`;
+    if (filter.valor) {
+      filtro += `valor=${filter.valor}&`;
     }
     return filtro;
   }
 }
 
-export const useProdutoService = new ProdutoService();
+export const useGrupoSaidasService = new GrupoSaidasService();
