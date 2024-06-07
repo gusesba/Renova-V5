@@ -1,14 +1,80 @@
+"use client";
 import Link from "next/link";
 import DarkModeSwitcher from "./DarkModeSwitcher";
 
 import Image from "next/image";
 import DropdownUser from "./DropdownUser";
 import { Search as SearchIcon } from "../Icones/Search";
+import { Table } from "../Icones/Table";
+import { useRef, useState } from "react";
+import { Plus } from "../Icones/Plus";
 
 const Header = (props: {
   sidebarOpen: string | boolean | undefined;
   setSidebarOpen: (arg0: boolean) => void;
 }) => {
+  const [searchValue, setSearchValue] = useState("");
+  const searchItems = [
+    {
+      name: "Tabela Clientes",
+      icon: <Table height={24} width={24} className="fill-primary/80" />,
+      link: "/clientes",
+    },
+    {
+      name: "Novo Clientes",
+      icon: <Plus height={24} width={24} className="fill-primary/80" />,
+      link: "/clientes/novo",
+    },
+    {
+      name: "Tabela Estoque",
+      icon: <Table height={24} width={24} className="fill-primary/80" />,
+      link: "/produtos",
+    },
+    {
+      name: "Tabela Saídas",
+      icon: <Table height={24} width={24} className="fill-primary/80" />,
+      link: "/saidas",
+    },
+    {
+      name: "Tabela Grupo Saídas",
+      icon: <Table height={24} width={24} className="fill-primary/80" />,
+      link: "/saidas/grupo",
+    },
+  ];
+
+  const dropDownSearch = () => {
+    return (
+      <div
+        id="drop-search"
+        className="-left-2 top-[52.3px] rounded-b-lg bg-slate-50 shadow-2xl  w-full h-60 hidden overflow-auto"
+      >
+        {searchItems.map((item, index) => {
+          const valoresPesquisa = searchValue
+            .toLocaleLowerCase()
+            .normalize("NFD")
+            .replace(/[\u0300-\u036f]/g, "")
+            .split(" ");
+          const nomeItem = item.name
+            .toLocaleLowerCase()
+            .normalize("NFD")
+            .replace(/[\u0300-\u036f]/g, "");
+          const itemEncontrado = valoresPesquisa.every((valor) =>
+            nomeItem.includes(valor)
+          );
+          if (!itemEncontrado) return null;
+          return (
+            <Link href={item.link} key={index}>
+              <div className="hover:bg-primary/10 hover:cursor-pointer flex items-center px-10 border-b border-primary/40 h-15">
+                {item.icon}
+                <h1 className="font-medium text-xl ml-2 ">{item.name}</h1>
+              </div>
+            </Link>
+          );
+        })}
+      </div>
+    );
+  };
+
   return (
     <header className="sticky top-0 z-999 flex w-full bg-white drop-shadow-1 dark:bg-boxdark dark:drop-shadow-none">
       <div className="flex flex-grow items-center justify-between px-4 py-4 shadow-2 md:px-6 2xl:px-11">
@@ -62,19 +128,57 @@ const Header = (props: {
         </div>
 
         <div className="hidden sm:block">
-          <form action="https://formbold.com/s/unique_form_id" method="POST">
-            <div className="relative">
-              <button className="absolute left-0 top-1/2 -translate-y-1/2">
-                <SearchIcon />
-              </button>
-
+          <div className="relative">
+            <button className="absolute left-0 top-1/2 -translate-y-1/2">
+              <SearchIcon />
+            </button>
+            <div>
               <input
+                value={searchValue}
                 type="text"
                 placeholder="Escreva para pesquisar..."
                 className="w-full bg-transparent pl-9 pr-4 font-normal focus:outline-none xl:w-125"
+                onChange={(e) => {
+                  setSearchValue(e.target.value);
+                  document
+                    .getElementById("drop-search")
+                    ?.classList.remove("hidden");
+                  document
+                    .getElementById("drop-search")
+                    ?.classList.add("absolute");
+                  if (e.target.value === "") {
+                    document
+                      .getElementById("drop-search")
+                      ?.classList.add("hidden");
+                    document
+                      .getElementById("drop-search")
+                      ?.classList.remove("absolute");
+                  }
+                }}
+                onFocus={(e) => {
+                  if (searchValue !== "") {
+                    document
+                      .getElementById("drop-search")
+                      ?.classList.remove("hidden");
+                    document
+                      .getElementById("drop-search")
+                      ?.classList.add("absolute");
+                  }
+                }}
+                onBlur={(e) => {
+                  setTimeout(() => {
+                    document
+                      .getElementById("drop-search")
+                      ?.classList.add("hidden");
+                    document
+                      .getElementById("drop-search")
+                      ?.classList.remove("absolute");
+                  }, 100);
+                }}
               />
+              {dropDownSearch()}
             </div>
-          </form>
+          </div>
         </div>
 
         <div className="flex items-center gap-3 2xsm:gap-7">
