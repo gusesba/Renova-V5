@@ -6,15 +6,15 @@ import Image from "next/image";
 import DropdownUser from "./DropdownUser";
 import { Search as SearchIcon } from "../Icones/Search";
 import { Table } from "../Icones/Table";
-import { useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { Plus } from "../Icones/Plus";
-import { Client } from "../Icones/Client";
 
 const Header = (props: {
   sidebarOpen: string | boolean | undefined;
   setSidebarOpen: (arg0: boolean) => void;
 }) => {
   const [searchValue, setSearchValue] = useState("");
+
   const searchItems = [
     {
       name: "Tabela Clientes",
@@ -42,6 +42,16 @@ const Header = (props: {
       link: "/saidas/grupo",
     },
   ];
+
+  useEffect(() => {
+    document.addEventListener("keydown", (e) => {
+      if (document.activeElement?.tagName === "INPUT") return;
+      if (e.key === "/") {
+        e.preventDefault();
+        (document.querySelector("#search-input") as HTMLInputElement).focus();
+      }
+    });
+  }, []);
 
   const dropDownSearch = () => {
     return (
@@ -138,9 +148,10 @@ const Header = (props: {
             </button>
             <div>
               <input
+                id={"search-input"}
                 value={searchValue}
                 type="text"
-                placeholder="Escreva para pesquisar..."
+                placeholder="Pressione / para pesquisar..."
                 className="w-full bg-transparent pl-9 pr-4 font-normal focus:outline-none xl:w-125"
                 onChange={(e) => {
                   setSearchValue(e.target.value);
