@@ -238,6 +238,7 @@ export const ConfigurationModal = <F,>({
         type="search"
         placeholder="Nome do Filtro"
         autoComplete={"off"}
+        autoFocus={true}
       />
     );
   };
