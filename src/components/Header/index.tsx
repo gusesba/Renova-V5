@@ -43,6 +43,26 @@ const Header = (props: {
     },
   ];
 
+  const openDropDownSearch = () => {
+    const dropSearch = document.getElementById("drop-search") as HTMLDivElement;
+    dropSearch.classList.remove("hidden");
+    dropSearch.classList.add("absolute");
+  };
+
+  const closeDropDownSearch = () => {
+    const dropSearch = document.getElementById("drop-search") as HTMLDivElement;
+    dropSearch.classList.add("closing");
+    dropSearch.addEventListener(
+      "animationend",
+      () => {
+        dropSearch.classList.remove("closing");
+        dropSearch.classList.add("hidden");
+        dropSearch.classList.remove("absolute");
+      },
+      { once: true }
+    );
+  };
+
   useEffect(() => {
     document.addEventListener("keydown", (e) => {
       if (document.activeElement?.tagName === "INPUT") return;
@@ -155,39 +175,19 @@ const Header = (props: {
                 className="w-full bg-transparent pl-9 pr-4 font-normal focus:outline-none xl:w-125"
                 onChange={(e) => {
                   setSearchValue(e.target.value);
-                  document
-                    .getElementById("drop-search")
-                    ?.classList.remove("hidden");
-                  document
-                    .getElementById("drop-search")
-                    ?.classList.add("absolute");
+                  openDropDownSearch();
                   if (e.target.value === "") {
-                    document
-                      .getElementById("drop-search")
-                      ?.classList.add("hidden");
-                    document
-                      .getElementById("drop-search")
-                      ?.classList.remove("absolute");
+                    closeDropDownSearch();
                   }
                 }}
                 onFocus={(e) => {
                   if (searchValue !== "") {
-                    document
-                      .getElementById("drop-search")
-                      ?.classList.remove("hidden");
-                    document
-                      .getElementById("drop-search")
-                      ?.classList.add("absolute");
+                    openDropDownSearch();
                   }
                 }}
                 onBlur={(e) => {
                   setTimeout(() => {
-                    document
-                      .getElementById("drop-search")
-                      ?.classList.add("hidden");
-                    document
-                      .getElementById("drop-search")
-                      ?.classList.remove("absolute");
+                    closeDropDownSearch();
                   }, 100);
                 }}
               />

@@ -327,3 +327,11 @@ div::-webkit-scrollbar-thumb {
 .fullscreen {
   @apply fixed inset-0 z-99999 bg-black bg-opacity-50 flex items-center justify-center h-screen w-screen;
 }
+
+#drop-search.absolute {
+  animation: fade-in 150ms;
+}
+
+#drop-search.closing {
+  animation: fade-out 150ms;
+}
