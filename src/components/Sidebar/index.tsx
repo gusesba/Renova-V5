@@ -11,6 +11,7 @@ import { Table as TableIcon } from "../Icones/Table";
 import { Bag as BagIcon } from "../Icones/Bag";
 import { Cart as CartIcon } from "../Icones/Cart";
 import SidebarLinkGroup from "./SidebarLinkGroup";
+import { Cadeado } from "../Icones/Cadeado";
 
 interface SidebarProps {
   sidebarOpen: boolean;
@@ -207,6 +208,22 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
     );
   };
 
+  const novoUsuario = () => {
+    return (
+      <li>
+        <Link
+          href="/signup"
+          className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
+            pathname.includes("signup") && "bg-graydark dark:bg-meta-4"
+          }`}
+        >
+          <Cadeado />
+          Novo Usuário
+        </Link>
+      </li>
+    );
+  };
+
   // expand dropdown
   useEffect(() => {
     localStorage.setItem("sidebar-expanded", sidebarExpanded.toString());
@@ -287,6 +304,12 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
 
               {saidasDropdown()}
             </ul>
+
+            <h3 className="mb-4 ml-4 text-sm font-semibold text-bodydark2">
+              SEGURANÇA
+            </h3>
+
+            <ul className="mb-6 flex flex-col gap-1.5">{novoUsuario()}</ul>
           </div>
         </nav>
       </div>
