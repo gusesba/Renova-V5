@@ -7,7 +7,7 @@ import {
 } from "@/resources/cliente/cliente.service";
 
 const Clientes = () => {
-  const clientesService = useClienteService;
+  const clientesService = useClienteService();
   return (
     <DataTable<Cliente, clienteFilter>
       titulo="Clientes"

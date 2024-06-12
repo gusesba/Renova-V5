@@ -71,4 +71,4 @@ export class ProdutoService implements TableService<Produto, produtoFilter> {
   }
 }
 
-export const useProdutoService = new ProdutoService();
+export const useProdutoService = () => new ProdutoService();

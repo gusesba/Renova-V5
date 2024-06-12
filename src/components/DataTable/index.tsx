@@ -6,7 +6,6 @@ import { LinhaTabela } from "@/components/DataTable/LinhaTabela";
 import { DeleteModal } from "@/components/DataTable/DeleteModal";
 import { Title } from "@/components/Utils/Title";
 import { Table } from "@/components/DataTable/Table";
-import { Top } from "@/components/DataTable/Top";
 import { Content } from "@/components/DataTable/Content";
 import { TableTitleItem } from "@/components/DataTable/TableTitleItem";
 import { Bottom } from "@/components/DataTable/Bottom";
@@ -17,6 +16,7 @@ import { CopyButton } from "@/components/DataTable/CopyButton";
 import { ConfigurationButton } from "./ConfigurationButton";
 import { ConfigurationModal } from "./ConfigurationModal";
 import { Check } from "../Icones/Check";
+import { Top } from "@/components/DataTable/Top";
 
 //#region Tipos
 

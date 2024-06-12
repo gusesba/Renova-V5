@@ -7,7 +7,7 @@ import {
 } from "@/resources/produto/produto.service";
 
 const Produtos = () => {
-  const produtosService = useProdutoService;
+  const produtosService = useProdutoService();
   return (
     <DataTable<Produto, produtoFilter>
       titulo="Produtos"
