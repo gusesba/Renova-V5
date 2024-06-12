@@ -4,6 +4,13 @@ export class User {
   password?: string;
 }
 
+export class UserSignUp {
+  nome?: string;
+  email?: string;
+  password?: string;
+  repPassword?: string;
+}
+
 export class Credentials {
   email?: string;
   password?: string;
@@ -14,7 +21,7 @@ export class AccessToken {
 }
 
 export class UserSessionToken {
-  name?: string;
+  nome?: string;
   email?: string;
   accessToken?: string;
   expiration?: string;

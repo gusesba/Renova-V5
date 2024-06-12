@@ -1,8 +1,32 @@
 "use client";
 
+import { useAuth } from "@/resources/user/authentication.service";
+import { Credentials, UserSignUp } from "@/resources/user/users.resource";
+import { useFormik } from "formik";
 import Link from "next/link";
+import { useState } from "react";
+import { formScheme, SignUpForm, validationScheme } from "./formScheme";
 
 export default function Signup() {
+  const auth = useAuth();
+  const [enableValidation, setEnableValidation] = useState(false);
+
+  const onSubmit = async (values: SignUpForm) => {
+    const credentials: UserSignUp = {
+      nome: values.nome,
+      email: values.email,
+      password: values.password,
+      repPassword: values.repPassword,
+    };
+  };
+
+  const { values, handleChange, handleSubmit, errors } = useFormik<SignUpForm>({
+    initialValues: formScheme,
+    validationSchema: validationScheme,
+    onSubmit: onSubmit,
+    validateOnChange: enableValidation,
+  });
+
   return (
     <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark w-150">
       <div className="w-full border-stroke dark:border-strokedark">
@@ -12,21 +36,31 @@ export default function Signup() {
             Nova Conta
           </h2>
 
-          <form>
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              setEnableValidation(true);
+              handleSubmit(e);
+            }}
+          >
             <div className="mb-4">
               <label className="mb-2.5 block font-medium text-black dark:text-white">
                 Nome
               </label>
               <div className="relative">
                 <input
+                  value={values.nome}
+                  onChange={handleChange}
+                  id="nome"
                   type="text"
                   placeholder="Nome Completo"
                   className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                 />
+                <span className="ml-1 text-sm text-meta-1">{errors.nome}</span>
 
                 <span className="absolute right-4 top-4">
                   <svg
-                    className="fill-current"
+                    className={errors.nome ? "fill-meta-1" : "fill-current"}
                     width="22"
                     height="22"
                     viewBox="0 0 22 22"
@@ -54,13 +88,17 @@ export default function Signup() {
               </label>
               <div className="relative">
                 <input
+                  value={values.email}
+                  onChange={handleChange}
+                  id="email"
                   placeholder="Email"
                   className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                 />
+                <span className="ml-1 text-sm text-meta-1">{errors.email}</span>
 
                 <span className="absolute right-4 top-4">
                   <svg
-                    className="fill-current"
+                    className={errors.email ? "fill-meta-1" : "fill-current"}
                     width="22"
                     height="22"
                     viewBox="0 0 22 22"
@@ -84,14 +122,20 @@ export default function Signup() {
               </label>
               <div className="relative">
                 <input
+                  value={values.password}
+                  onChange={handleChange}
                   type="password"
+                  id="password"
                   placeholder="Senha"
                   className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                 />
+                <span className="ml-1 text-sm text-meta-1">
+                  {errors.password}
+                </span>
 
                 <span className="absolute right-4 top-4">
                   <svg
-                    className="fill-current"
+                    className={errors.password ? "fill-meta-1" : "fill-current"}
                     width="22"
                     height="22"
                     viewBox="0 0 22 22"
@@ -119,14 +163,22 @@ export default function Signup() {
               </label>
               <div className="relative">
                 <input
+                  value={values.repPassword}
+                  onChange={handleChange}
                   type="password"
+                  id="repPassword"
                   placeholder="Repita sua Senha"
                   className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                 />
+                <span className="ml-1 text-sm text-meta-1">
+                  {errors.repPassword}
+                </span>
 
                 <span className="absolute right-4 top-4">
                   <svg
-                    className="fill-current"
+                    className={
+                      errors.repPassword ? "fill-meta-1" : "fill-current"
+                    }
                     width="22"
                     height="22"
                     viewBox="0 0 22 22"
