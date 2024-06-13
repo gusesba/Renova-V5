@@ -1,13 +1,11 @@
-interface FormComponentProps {
-  children?: React.ReactNode;
-}
+interface FormComponentProps extends React.HTMLAttributes<HTMLDivElement> {}
 
 export const FormComponent: React.FC<FormComponentProps> = ({
-  children,
+  ...props
 }: FormComponentProps) => {
   return (
     <>
-      <div className="w-full lg:w-1/2">{children}</div>
+      <div className="w-full">{props.children}</div>
     </>
   );
 };

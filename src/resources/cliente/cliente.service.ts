@@ -18,6 +18,7 @@ export class ClienteService implements TableService<Cliente, clienteFilter> {
     take: number = 10,
     page: number = 0
   ): Promise<PaginatedData<Cliente>> {
+    return clientePage;
     var filtro = this.gerarFiltro(filter);
     const response = await fetch(
       `${this.baseURL}?size=${take}&page=${page}&${filtro}`
@@ -43,6 +44,11 @@ export class ClienteService implements TableService<Cliente, clienteFilter> {
 
   // #TODO - Implementar update
   // #TODO - Implementar create
+  async create(data: Cliente) {
+    //const response = await fetch(this.baseURL,{method: 'POST', body: JSON.stringify(data)});
+    //return await response.json();
+    console.log(data);
+  }
 
   gerarFiltro(filter: clienteFilter): string {
     var filtro = "";
@@ -57,9 +63,6 @@ export class ClienteService implements TableService<Cliente, clienteFilter> {
     }
     if (filter.apelido) {
       filtro += `apelido=${filter.apelido}&`;
-    }
-    if (filter.indicacao) {
-      filtro += `indicacao=${filter.indicacao}&`;
     }
     if (filter.geral) {
       filtro += `geral=${filter.geral}&`;

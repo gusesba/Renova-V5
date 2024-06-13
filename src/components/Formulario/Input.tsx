@@ -1,14 +1,13 @@
-interface InputProps {
-  placeholder?: string;
-}
+interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {}
 
-export const Input: React.FC<InputProps> = ({ placeholder }: InputProps) => {
+export const Input: React.FC<InputProps> = ({ ...props }: InputProps) => {
   return (
     <>
       <input
+        value={props.value}
         type="text"
-        placeholder={placeholder}
-        className="w-full rounded border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+        className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+        {...props}
       />
     </>
   );

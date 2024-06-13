@@ -30,7 +30,7 @@ export const saidaHeaders = [
   { text: "Preço Inicial", value: "preco" },
   { text: "Descrição", value: "descricao" },
   { text: "Comprador", value: "comprador" },
-  { text: "Data Entrada", value: "data" },
+  { text: "Data Entrada", value: "dataEntrada" },
   { text: "Data Saída", value: "data" },
   { text: "Preço Venda", value: "valor" },
 ];

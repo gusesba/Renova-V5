@@ -5,6 +5,7 @@ export class Produto {
   tamanho?: string;
   preco?: number;
   descricao?: string;
+  dataEntrada?: Date;
 }
 
 export const produtosHeaders = [
@@ -14,4 +15,5 @@ export const produtosHeaders = [
   { text: "Tamanho", value: "tamanho" },
   { text: "Preço", value: "preco" },
   { text: "Descrição", value: "descricao" },
+  { text: "Data Entrada", value: "dataEntrada" },
 ];

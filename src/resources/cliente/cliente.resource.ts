@@ -3,7 +3,6 @@ export class Cliente {
   nome?: string;
   celular?: string;
   apelido?: string;
-  indicacao?: string;
 }
 
 export const clientesHeaders = [
@@ -11,5 +10,4 @@ export const clientesHeaders = [
   { text: "Nome", value: "nome" },
   { text: "Celular", value: "celular" },
   { text: "Apelido", value: "apelido" },
-  { text: "Indicação", value: "indicacao" },
 ];

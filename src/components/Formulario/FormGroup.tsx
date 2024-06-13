@@ -1,13 +1,13 @@
-interface FormGroupProps {
-  children?: React.ReactNode;
-}
+interface FormGroupProps extends React.HTMLAttributes<HTMLDivElement> {}
 
 export const FormGroup: React.FC<FormGroupProps> = ({
-  children,
+  ...props
 }: FormGroupProps) => {
   return (
     <>
-      <div className="mb-4.5 flex flex-col gap-6 xl:flex-row">{children}</div>
+      <div className="mb-4.5 flex flex-col gap-6" {...props}>
+        {props.children}
+      </div>
     </>
   );
 };

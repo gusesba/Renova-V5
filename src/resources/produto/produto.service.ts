@@ -46,7 +46,11 @@ export class ProdutoService implements TableService<Produto, produtoFilter> {
 
   // #TODO - Implementar update
   // #TODO - Implementar create
-
+  async create(data: Produto) {
+    //const response = await fetch(this.baseURL,{method: 'POST', body: JSON.stringify(data)});
+    //return await response.json();
+    console.log(data);
+  }
   gerarFiltro(filter: produtoFilter): string {
     var filtro = "";
     if (filter.id) {
