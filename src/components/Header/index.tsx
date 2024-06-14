@@ -9,13 +9,19 @@ import { Table } from "../Icones/Table";
 import { useEffect, useState } from "react";
 import { Plus } from "../Icones/Plus";
 
+interface searchItem {
+  name: string;
+  icon: JSX.Element;
+  link: string;
+}
+
 const Header = (props: {
   sidebarOpen: string | boolean | undefined;
   setSidebarOpen: (arg0: boolean) => void;
 }) => {
   const [searchValue, setSearchValue] = useState("");
 
-  const searchItems = [
+  const searchItems: searchItem[] = [
     {
       name: "Tabela Clientes",
       icon: <Table height={24} width={24} className="fill-primary" />,
@@ -73,38 +79,56 @@ const Header = (props: {
     });
   }, []);
 
+  const getItensPesquisa = () => {
+    return searchItems.filter((item) => {
+      const valoresPesquisa = searchValue
+        .toLocaleLowerCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .split(" ");
+      const nomeItem = item.name
+        .toLocaleLowerCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "");
+      const itemEncontrado = valoresPesquisa.every((valor) =>
+        nomeItem.includes(valor)
+      );
+      return itemEncontrado;
+    });
+  };
+
+  const pesquisaNotFound = () => {
+    return (
+      <div className="flex justify-center mt-4">
+        <span>Nenhum item corresponde à pesquisa.</span>
+      </div>
+    );
+  };
+
+  const listaPesquisa = (itens: searchItem[]) => {
+    return itens.map((item, index) => {
+      return (
+        <Link href={item.link} key={index}>
+          <div
+            onClick={() => setSearchValue("")}
+            className="hover:bg-primary/10 hover:cursor-pointer flex items-center px-10 h-15"
+          >
+            {item.icon}
+            <h1 className="font-medium text-l ml-2 ">{item.name}</h1>
+          </div>
+        </Link>
+      );
+    });
+  };
+
   const dropDownSearch = () => {
+    const itens = getItensPesquisa();
     return (
       <div
         id="drop-search"
-        className="-left-2 top-[52.3px] rounded-b-lg bg-slate-50 dark:bg-boxdark shadow-2xl w-80 h-60 hidden overflow-auto border-t border-primary/20"
+        className=" drop-animation -left-2 top-[52.3px] rounded-b-lg bg-slate-50 dark:bg-boxdark shadow-2xl w-80 h-60 hidden overflow-auto border-t border-primary/20"
       >
-        {searchItems.map((item, index) => {
-          const valoresPesquisa = searchValue
-            .toLocaleLowerCase()
-            .normalize("NFD")
-            .replace(/[\u0300-\u036f]/g, "")
-            .split(" ");
-          const nomeItem = item.name
-            .toLocaleLowerCase()
-            .normalize("NFD")
-            .replace(/[\u0300-\u036f]/g, "");
-          const itemEncontrado = valoresPesquisa.every((valor) =>
-            nomeItem.includes(valor)
-          );
-          if (!itemEncontrado) return null;
-          return (
-            <Link href={item.link} key={index}>
-              <div
-                onClick={() => setSearchValue("")}
-                className="hover:bg-primary/10 hover:cursor-pointer flex items-center px-10 h-15"
-              >
-                {item.icon}
-                <h1 className="font-medium text-l ml-2 ">{item.name}</h1>
-              </div>
-            </Link>
-          );
-        })}
+        {itens.length == 0 ? pesquisaNotFound() : listaPesquisa(itens)}
       </div>
     );
   };
@@ -175,10 +199,10 @@ const Header = (props: {
                 className="w-full bg-transparent pl-9 pr-4 font-normal focus:outline-none xl:w-125"
                 onChange={(e) => {
                   setSearchValue(e.target.value);
-                  openDropDownSearch();
+
                   if (e.target.value === "") {
                     closeDropDownSearch();
-                  }
+                  } else openDropDownSearch();
                 }}
                 onFocus={(e) => {
                   if (searchValue !== "") {

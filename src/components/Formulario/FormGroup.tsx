@@ -5,7 +5,7 @@ export const FormGroup: React.FC<FormGroupProps> = ({
 }: FormGroupProps) => {
   return (
     <>
-      <div className="mb-4.5 flex flex-col gap-6" {...props}>
+      <div className="mb-4.5 flex flex-col gap-6 relative" {...props}>
         {props.children}
       </div>
     </>

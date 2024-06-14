@@ -26,5 +26,15 @@ export const formScheme: NovoProdutoForm = {
   tamanho: "",
   preco: "",
   descricao: "",
-  dataEntrada: "",
+  dataEntrada: getFormattedDate(),
 };
+
+function getFormattedDate() {
+  let date = new Date(Date.now());
+
+  let day = String(date.getDate()).padStart(2, "0");
+  let month = String(date.getMonth() + 1).padStart(2, "0"); // getMonth() returns 0-11, so we add 1
+  let year = date.getFullYear();
+
+  return `${day}/${month}/${year}`;
+}

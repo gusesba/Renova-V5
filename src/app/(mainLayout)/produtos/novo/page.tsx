@@ -29,7 +29,31 @@ export default function Novo() {
     produtoService.create(produto);
   };
 
-  const { values, handleChange, handleSubmit, errors } =
+  const openDropDownSearch = (id: string) => {
+    const dropSearch = document.getElementById(
+      `drop-search-${id}`
+    ) as HTMLDivElement;
+    dropSearch.classList.remove("hidden");
+    dropSearch.classList.add("absolute");
+  };
+
+  const closeDropDownSearch = (id: string) => {
+    const dropSearch = document.getElementById(
+      `drop-search-${id}`
+    ) as HTMLDivElement;
+    dropSearch.classList.add("closing");
+    dropSearch.addEventListener(
+      "animationend",
+      () => {
+        dropSearch.classList.remove("closing");
+        dropSearch.classList.add("hidden");
+        dropSearch.classList.remove("absolute");
+      },
+      { once: true }
+    );
+  };
+
+  const { values, handleChange, handleSubmit, errors, setFieldValue } =
     useFormik<NovoProdutoForm>({
       initialValues: formScheme,
       validationSchema: validationScheme,
@@ -49,12 +73,14 @@ export default function Novo() {
     Icon,
     label,
     obrigatorio,
+    dropdown = false,
   }: {
     id: string;
     placeholder?: string;
     Icon?: any;
     label?: string;
     obrigatorio?: boolean;
+    dropdown?: boolean;
   }) => {
     label = label || id.charAt(0).toUpperCase() + id.slice(1);
     placeholder = placeholder || label;
@@ -67,6 +93,15 @@ export default function Novo() {
             value={values[id as keyof NovoProdutoForm]}
             id={id}
             placeholder={placeholder}
+            onBlur={(e) => {
+              dropdown &&
+                setTimeout(() => {
+                  closeDropDownSearch(id);
+                }, 100);
+            }}
+            onFocus={(e) => {
+              dropdown && openDropDownSearch(id);
+            }}
           />
           <FormInputError>{errors[id as keyof NovoProdutoForm]}</FormInputError>
 
@@ -86,6 +121,25 @@ export default function Novo() {
     );
   };
 
+  const dropDownSearch = (itens: string[], id: string) => {
+    return (
+      <div
+        id={`drop-search-${id}`}
+        className="drop-animation top-[92px] z-999 rounded-b-lg bg-slate-50 dark:bg-boxdark shadow-2xl w-full h-60 hidden overflow-auto border-t border-primary/20"
+      >
+        {itens.map((item, index) => (
+          <div
+            key={index}
+            onClick={() => setFieldValue(id, item)}
+            className="hover:bg-primary/10 hover:cursor-pointer flex items-center px-10 h-15"
+          >
+            <h1 className="font-medium text-l ml-2 ">{item}</h1>
+          </div>
+        ))}
+      </div>
+    );
+  };
+
   return (
     <>
       <div className="w-150">
@@ -95,7 +149,48 @@ export default function Novo() {
           <Formulario onSubmit={handleFormSubmit}>
             <FormGroup>
               {inputHolder({
-                id: "apelido",
+                id: "fornecedor",
+              })}
+            </FormGroup>
+            <FormGroup>
+              {inputHolder({
+                id: "tipo",
+              })}
+            </FormGroup>
+            <FormGroup>
+              {inputHolder({
+                id: "marca",
+              })}
+            </FormGroup>
+            <FormGroup>
+              {inputHolder({
+                id: "cor",
+                dropdown: true,
+              })}
+              {dropDownSearch(["Azul", "Verde"], "cor")}
+            </FormGroup>
+            <FormGroup>
+              {inputHolder({
+                id: "tamanho",
+                dropdown: true,
+              })}
+              {dropDownSearch(["P", "PP"], "tamanho")}
+            </FormGroup>
+            <FormGroup>
+              {inputHolder({
+                id: "preco",
+              })}
+            </FormGroup>
+            <FormGroup>
+              {inputHolder({
+                id: "descricao",
+              })}
+            </FormGroup>
+            <FormGroup>
+              {inputHolder({
+                id: "dataEntrada",
+                label: "Data Entrada",
+                placeholder: "Data Entrada",
               })}
             </FormGroup>
 
