@@ -63,7 +63,6 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                         pathname === "/clientes" && "text-white"
                       }`}
                     >
-                      <TableIcon />
                       Tabela
                     </Link>
                   </li>
@@ -74,7 +73,6 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                         pathname === "/clientes/novo" && "text-white"
                       }`}
                     >
-                      <PlusIcon />
                       Novo Cliente
                     </Link>
                   </li>
@@ -119,14 +117,13 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                     <Link
                       href="/produtos"
                       className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
-                        pathname.includes("produtos") &&
-                        "bg-graydark dark:bg-meta-4"
+                        pathname === "/produtos" && "bg-graydark dark:bg-meta-4"
                       }`}
                     >
-                      <TableIcon />
                       Estoque
                     </Link>
                   </li>
+                  {novoProduto()}
                 </ul>
               </div>
               {/* <!-- Dropdown Menu End --> */}
@@ -166,6 +163,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                 <ul className="mb-5.5 mt-4 flex flex-col gap-2.5 pl-6">
                   {saidas()}
                   {saidasGrupo()}
+                  {novaSaida()}
                 </ul>
               </div>
               {/* <!-- Dropdown Menu End --> */}
@@ -185,7 +183,6 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
             pathname === "/saidas" && "bg-graydark dark:bg-meta-4"
           }`}
         >
-          <TableIcon />
           Todas as Saídas
         </Link>
       </li>
@@ -201,8 +198,38 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
             pathname.includes("saidas/grupo") && "bg-graydark dark:bg-meta-4"
           }`}
         >
-          <TableIcon />
           Grupo de Saídas
+        </Link>
+      </li>
+    );
+  };
+
+  const novaSaida = () => {
+    return (
+      <li>
+        <Link
+          href="/saidas/novo"
+          className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
+            pathname === "/saidas/novo" && "bg-graydark dark:bg-meta-4"
+          }`}
+        >
+          Nova Saída
+        </Link>
+      </li>
+    );
+  };
+
+  const novoProduto = () => {
+    console.log(pathname);
+    return (
+      <li>
+        <Link
+          href="/produtos/novo"
+          className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
+            pathname === "/produtos/novo" && "bg-graydark dark:bg-meta-4"
+          }`}
+        >
+          Novo Produto
         </Link>
       </li>
     );
