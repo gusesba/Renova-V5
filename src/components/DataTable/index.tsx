@@ -249,12 +249,17 @@ export const DataTable = <T, F>({
 
   //#region Componente
 
+  const deleteList = (itens: number[]) => {
+    service.deleteList(itens);
+    setLinhasSelecionadas([]);
+  };
+
   return (
     <>
       <DeleteModal
         conteudo={titulo}
         itens={linhasSelecionadas}
-        deleteList={service.deleteList}
+        deleteList={deleteList}
       />
       <ConfigurationModal
         name={path}
