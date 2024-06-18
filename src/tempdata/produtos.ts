@@ -1,6 +1,6 @@
 import { Produto } from "@/resources/produto/produto.resource";
 
-const produtos: Produto[] = [
+export const produtos: Produto[] = [
   {
     id: 1,
     tipo: "Tipo 1",
