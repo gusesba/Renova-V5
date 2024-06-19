@@ -66,7 +66,7 @@ export const DataTable = <T, F>({
 
   const router = useRouter();
 
-  const [
+  const {
     linhasSelecionadas,
     setLinhasSelecionadas,
     take,
@@ -74,11 +74,11 @@ export const DataTable = <T, F>({
     page,
     setPage,
     filter,
-    headersState,
-    setHeadersState,
+    header: headersState,
+    updateHeader: setHeadersState,
     isEditing,
     setIsEditing,
-  ] = useDataTable<F>(headers, path);
+  } = useDataTable<F>(headers, path);
 
   const [drag, setDrag] = useState<number>(-1);
 

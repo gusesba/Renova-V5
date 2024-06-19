@@ -61,19 +61,15 @@ const Novo = <T, F>() => {
 
   const addInput = useRef<HTMLInputElement>(null);
 
-  const [
+  const {
     linhasSelecionadas,
     setLinhasSelecionadas,
-    take,
-    setTake,
-    page,
-    setPage,
     filter,
-    headersState,
-    setHeadersState,
+    header: headersState,
+    updateHeader: setHeadersState,
     isEditing,
     setIsEditing,
-  ] = useDataTable<F>(produtosHeaders, "novaSaida");
+  } = useDataTable<F>(produtosHeaders, "novaSaida");
 
   const [drag, setDrag] = useState<number>(-1);
 
@@ -260,7 +256,8 @@ const Novo = <T, F>() => {
           {headerTabela()}
           <tbody>{linhasTabela(headersState)}</tbody>
         </Content>
-        <div className="datatable-bottom h-20 border-t-gray-1 dark:border-t-graydark border-t-[1px] flex justify-end items-center">
+        <div className="datatable-bottom h-20 border-t-gray-1 dark:border-t-graydark border-t-[1px] flex justify-between items-center">
+          <div className="datatable-info m-8 font-medium">Total : R$ 40,00</div>
           <div className="datatable-info m-8 font-medium">
             {produtos.length} produtos selecionados
           </div>

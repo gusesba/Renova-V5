@@ -11,19 +11,19 @@ import {
 function useDataTable<A>(
   headers: { text: string; value: string }[],
   path: string
-): [
-  number[],
-  Dispatch<SetStateAction<number[]>>,
-  number,
-  Dispatch<SetStateAction<number>>,
-  number,
-  Dispatch<SetStateAction<number>>,
-  MutableRefObject<A>,
-  { text: string; value: string }[],
-  Dispatch<SetStateAction<{ text: string; value: string }[]>>,
-  boolean,
-  Dispatch<SetStateAction<boolean>>
-] {
+): {
+  linhasSelecionadas: number[];
+  setLinhasSelecionadas: Dispatch<SetStateAction<number[]>>;
+  take: number;
+  setTake: Dispatch<SetStateAction<number>>;
+  page: number;
+  setPage: Dispatch<SetStateAction<number>>;
+  filter: MutableRefObject<A>;
+  header: { text: string; value: string }[];
+  updateHeader: Dispatch<SetStateAction<{ text: string; value: string }[]>>;
+  isEditing: boolean;
+  setIsEditing: Dispatch<SetStateAction<boolean>>;
+} {
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [linhasSelecionadas, setLinhasSelecionadas] = useState<number[]>([]);
   const [take, setTake] = useState<number>(10);
@@ -55,7 +55,7 @@ function useDataTable<A>(
     setHeader(newValue);
   };
 
-  return [
+  return {
     linhasSelecionadas,
     setLinhasSelecionadas,
     take,
@@ -67,7 +67,7 @@ function useDataTable<A>(
     updateHeader,
     isEditing,
     setIsEditing,
-  ];
+  };
 }
 
 export default useDataTable;
